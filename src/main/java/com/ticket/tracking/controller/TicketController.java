@@ -1,6 +1,8 @@
 package com.ticket.tracking.controller;
 
 import com.ticket.tracking.entity.Ticket;
+import com.ticket.tracking.entity.TicketRequest;
+import com.ticket.tracking.entity.TicketResponse;
 import com.ticket.tracking.parameter.TicketQueryParameter;
 import com.ticket.tracking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.*;
 
@@ -27,20 +30,20 @@ public class TicketController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ticket> getTicket(@PathVariable("id") String id) {
-        Ticket ticket = ticketService.getTicket(id);
+    public ResponseEntity<TicketResponse> getTicket(@PathVariable("id") String id) {
+        TicketResponse ticket = ticketService.getTicketResponse(id);
         return ResponseEntity.ok(ticket);
     }
 
     @GetMapping
-    public ResponseEntity<List<Ticket>> getTickets(@ModelAttribute TicketQueryParameter param) {
-        List<Ticket> tickets = ticketService.getTickets(param);
+    public ResponseEntity<List<TicketResponse>> getTickets(@ModelAttribute TicketQueryParameter param) {
+        List<TicketResponse> tickets = ticketService.getTicketResponses(param);
         return ResponseEntity.ok(tickets);
     }
 
     @PostMapping
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket request) {
-        Ticket ticket = ticketService.createTicket(request);
+    public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest request) {
+        TicketResponse ticket = ticketService.createTicket(request);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -51,23 +54,10 @@ public class TicketController {
         return ResponseEntity.created(location).body(ticket);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Ticket> createTicketType(@RequestBody Ticket request) {
-//        Ticket ticket = ticketService.createTicket(request);
-//
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{type}")
-//                .buildAndExpand(ticket.getId())
-//                .toUri();
-//
-//        return ResponseEntity.created(location).body(ticket);
-//    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Ticket> replaceTicket(
-            @PathVariable("id") String id, @RequestBody Ticket request) {
-        Ticket ticket = ticketService.replaceTicket(id, request);
+    public ResponseEntity<TicketResponse> replaceTicket(
+            @PathVariable("id") String id, @Valid @RequestBody TicketRequest request) {
+        TicketResponse ticket = ticketService.replaceTicket(id, request);
         return ResponseEntity.ok(ticket);
     }
 

@@ -1,7 +1,9 @@
 package com.ticket.tracking.service;
 
+import com.ticket.tracking.convert.TicketConverter;
 import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.entity.TicketType;
+import com.ticket.tracking.entity.TicketRequest;
+import com.ticket.tracking.entity.TicketResponse;
 import com.ticket.tracking.exception.InvalidValueException;
 import com.ticket.tracking.exception.NotFoundException;
 import com.ticket.tracking.parameter.TicketQueryParameter;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /*
 業務邏輯層：又稱作Service，會被Controller呼叫。它負責根據請求來進行資料處理，並回傳結果。也可能被其他Service呼叫。
@@ -31,9 +34,27 @@ public class TicketService {
                 .orElseThrow(() -> new NotFoundException("Can't find ticket."));
     }
 
-    public Ticket createTicket(Ticket request) {
+    public TicketResponse getTicketResponse(String id) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Can't find ticket"));
+        return TicketConverter.toTicketResponse(ticket);
+    }
+
+    public List<TicketResponse> getTicketResponses(TicketQueryParameter param) {
+        String nameKeyword = Optional.ofNullable(param.getKeyword()).orElse("");
+        int priceFrom = Optional.ofNullable(param.getCreateDateFrom()).orElse(0);
+        int priceTo = Optional.ofNullable(param.getCreateDateTo()).orElse(Integer.MAX_VALUE);
+        Sort sort = configureSort(param.getOrderBy(), param.getSortRule());
+
+        List<Ticket> products = repository.findByCreateDateToBetweenAndSummaryLikeIgnoreCase(priceFrom, priceTo, nameKeyword, sort);
+
+        return products.stream()
+                .map(TicketConverter::toTicketResponse)
+                .collect(Collectors.toList());
+    }
+
+    public TicketResponse createTicket(TicketRequest request) {
         Ticket ticket = ticketObj(request);
-        System.out.println(ticket.getTicketType());
         if (ticket.getTicketType().equals("invalid")) {
             throw new InvalidValueException("Invalid ticket type");
         }
@@ -46,19 +67,18 @@ public class TicketService {
         if (ticket.getTicketStatus().equals("invalid")) {
             throw new InvalidValueException("Invalid ticket status");
         }
+        repository.insert(ticket);
 
-        return repository.insert(ticket);
+        return TicketConverter.toTicketResponse(ticket);
     }
 
-    public Ticket replaceTicket(String id, Ticket request) {
+    public TicketResponse replaceTicket(String id, TicketRequest request) {
         Ticket oldTicket = getTicket(id);
+        Ticket newTicket = TicketConverter.toTicket(request);
+        newTicket.setId(oldTicket.getId());
+        repository.save(newTicket);
 
-        Ticket ticket = new Ticket();
-        ticket.setId(oldTicket.getId());
-        ticket.setSummary(request.getSummary());
-        ticket.setCreateDate(request.getCreateDate());
-
-        return repository.save(ticket);
+        return TicketConverter.toTicketResponse(newTicket);
     }
 
     public void deleteTicket(String id) {
@@ -85,7 +105,7 @@ public class TicketService {
         return sort;
     }
 
-    private Ticket ticketObj(Ticket request) {
+    private Ticket ticketObj(TicketRequest request) {
         Ticket ticket = new Ticket();
         ticket.setSummary(request.getSummary());
         ticket.setDescription(request.getDescription());

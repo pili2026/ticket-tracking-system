@@ -1,57 +1,44 @@
 package com.ticket.tracking.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Negative;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
-@Document(collection = "tickets")
-// define ticket object
-public class Ticket {
-    private String id;
+public class TicketRequest {
+
+    @NotEmpty(message = "Summary is undefined.")
     private String summary;
+
+    @NotEmpty(message = "Description is undefined.")
     private String description;
+
+    @NotEmpty(message = "Ticket status is undefined.")
     private String ticketStatus;
+
+    @NotEmpty(message = "Ticket type is undefined.")
     private String ticketType;
+
+    @NotEmpty(message = "Priority is undefined.")
     private String priority;
+
+    @NotEmpty(message = "Severity is undefined.")
     private String severity;
+
+    @Min(value = 0, message = "Create data is invalid.")
     private int createDate;
+
+    @Min(value = 0, message = "Expected data is invalid.")
     private int expectedDate;
+
+    @Min(value = 0, message = "Resolve data is invalid.")
     private int resolveDate;
+
+    @NotEmpty(message = "Reporter is undefined.")
     private String reporter;
+
+    @NotEmpty(message = "Assignee is undefined.")
     private String assignee;
 
-
-    public Ticket() {
-
-    }
-
-    public Ticket(String id, String summary, String description, String ticketStatus, String ticketType,
-                  String priority, String severity, int createDate, int expectedDate, int resolveDate,
-                  String reporter, String assignee) {
-        this.id = id;
-        this.summary = summary;
-        this.description = description;
-        this.ticketStatus = ticketStatus;
-        this.ticketType = ticketType;
-        this.priority = priority;
-        this.severity = severity;
-        this.createDate = createDate;
-        this.expectedDate = expectedDate;
-        this.resolveDate = resolveDate;
-        this.reporter = reporter;
-        this.assignee = assignee;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getSummary() {
         return summary;
@@ -174,4 +161,5 @@ public class Ticket {
     public void setAssignee(String assignee) {
         this.assignee = assignee;
     }
+
 }

@@ -1,15 +1,6 @@
 package com.ticket.tracking.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Negative;
-import javax.validation.constraints.NotEmpty;
-
-@Document(collection = "tickets")
-// define ticket object
-public class Ticket {
+public class TicketResponse {
     private String id;
     private String summary;
     private String description;
@@ -24,11 +15,11 @@ public class Ticket {
     private String assignee;
 
 
-    public Ticket() {
+    public TicketResponse() {
 
     }
 
-    public Ticket(String id, String summary, String description, String ticketStatus, String ticketType,
+    public TicketResponse(String id, String summary, String description, String ticketStatus, String ticketType,
                   String priority, String severity, int createDate, int expectedDate, int resolveDate,
                   String reporter, String assignee) {
         this.id = id;
