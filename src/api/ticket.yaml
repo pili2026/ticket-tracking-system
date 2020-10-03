@@ -1,0 +1,397 @@
+swagger: "2.0"
+info:
+  title: Sample API
+  description: API description in Markdown.
+  version: 1.0.0
+host: api.example.com
+tags:
+  - name: "role"
+    description: "About role page"
+    externalDocs:
+      description: "Find out more"
+      url: "http://localhost:8080"
+  - name: "tickets"
+    description: "All tickets page"
+    externalDocs:
+      description: "Find out more about our store"
+      url: "http://localhost:8080"
+schemes:
+  - http
+paths:
+  /role/roles:
+    get:
+      tags:
+        - "role"
+      summary: Returns a list of users.
+      description: For admin, get all users.
+      operationId: "getRoles"
+      produces:
+        - application/json
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/Role"
+      responses:
+        "200":
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Role"
+          description: "successful"
+        "404":
+          description: "Invalid status value"
+    post:
+      tags:
+        - "role"
+      summary: Create different role type.
+      description: Create new role.
+      operationId: "addRole"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Create different role type."
+          required: true
+          schema:
+            $ref: "#/definitions/createRole"
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/createRole"
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+        - "role"
+      summary: Update different type role(admin).
+      description: Update different type role.
+      operationId: "updatedRole"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update different type role"
+          required: true
+          schema:
+            $ref: "#/definitions/createRole"
+      responses:
+        "200":
+          schema:
+            $ref: "#/definitions/createRole"
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+    delete:
+      tags:
+        - "role"
+      summary: Delete role.
+      description: Delete role.
+      operationId: "DeleteRole"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+
+  /role/{role_type}/tickets:
+    get:
+      tags:
+        - "tickets"
+      summary: Returns a list of tickets.
+      description: For different role type, get all tickets.
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Create different type ticket"
+          required: true
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        200:
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+          description: Successful
+    post:
+      tags:
+        - "tickets"
+      summary: Create different type ticket(admin).
+      description: For different role, create ticket.
+      operationId: "addRoles"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Create different type ticket"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+
+  /role/{role_type}/tickets/{ticket_type}:
+    get:
+      tags:
+        - "tickets"
+      summary: Returns ticket content.
+      description: For different ticket type, get ticket content.
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Get different type ticket"
+          required: true
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid status value"
+    post:
+      tags:
+        - "tickets"
+      summary: Create different type ticket(admin).
+      description: For different role, create ticket.
+      operationId: "addRoles"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Create different type ticket"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+    delete:
+      tags:
+        - "tickets"
+      summary: Create different type ticket(admin).
+      description: For different role, create ticket.
+      operationId: "addRoles"
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "successful"
+        400:
+          description: "Invalid status value"
+
+  /role/{role_type}/tickets/{ticket_type}/{id}:
+    get:
+      tags:
+        - "tickets"
+      summary: Returns the specified ticket id content.
+      description: For different ticket id, get ticket content.
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Get different id ticket"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid status value"
+    put:
+      tags:
+        - "tickets"
+      summary: Update the specified ticket id content.
+      description: Update the specified ticket id content.
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Get different id ticket"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid status value"
+    delete:
+      tags:
+        - "tickets"
+      summary: Delete ticket.
+      description: Delete ticket.
+      operationId: "deleteTicket"
+      produces:
+        - application/json
+      responses:
+        200:
+          description: "successful"
+        400:
+          description: "Invalid status value"
+
+definitions:
+  Ticket:
+    type: "object"
+    required:
+      - "summary"
+      - "description"
+    properties:
+      status:
+        type: "integer"
+        example: 200
+      message:
+        type: "object"
+        properties:
+          id:
+            $ref: "#/definitions/MongoObjId"
+          ticket_type:
+            description: "ticket type"
+            enum:
+              - "Bug"
+              - "Feature"
+              - "Test Case"
+          summary:
+            type: "string"
+            example: "bug"
+          description:
+            type: "string"
+            example: "bug description"
+          ticket_status:
+            type: "string"
+            description: "bug status"
+            enum:
+              - "New"
+              - "Start Progress"
+              - "Close"
+              - "Resolve"
+              - "Verify"
+          priority:
+            type: "string"
+            description: "bug priority"
+            enum:
+              - "High"
+              - "Medium"
+              - "Low"
+          severity:
+            type: "string"
+            description: "bug severity"
+            enum:
+              - "Critical"
+              - "Major"
+              - "Moderate"
+              - "Minor"
+              - "Cosmetic"
+          create_date:
+            $ref: "#/definitions/Epoch"
+            description: "bug create time(epoch)"
+          expected_date:
+            $ref: "#/definitions/Epoch"
+            description: "bug expected resolve time(epoch)"
+          resolve_date:
+            $ref: "#/definitions/Epoch"
+            description: "bug resolved time(epoch)"
+          reporter:
+            type: "string"
+            example: "Code Leader"
+            description: "query role db"
+          assignee:
+            type: "string"
+            example: "Jeremy"
+            description: "query role db"
+  Role:
+    type: "object"
+    required:
+      - "account"
+    properties:
+      status:
+        type: "integer"
+        example: 200
+      message:
+        type: "object"
+        properties:
+          id:
+            $ref: "#/definitions/MongoObjId"
+          account:
+            type: "string"
+            example: "Jeremy"
+          role_type:
+            type: "string"
+            enum:
+              - "Admin"
+              - "RD"
+              - "QA"
+              - "PM"
+  createRole:
+    type: "object"
+    required:
+      - "account"
+      - "password"
+    properties:
+      status:
+        type: "integer"
+        example: 200
+      message:
+        type: "object"
+        properties:
+          id:
+            $ref: "#/definitions/MongoObjId"
+          account:
+            type: "string"
+            example: "Jeremy"
+          password:
+            type: "string"
+            example: "pass"
+          role_type:
+            type: "string"
+            enum:
+              - "Admin"
+              - "RD"
+              - "QA"
+              - "PM"
+
+  MongoObjId:
+    type: string
+    format: ObjectId
+    pattern: '^(?=[a-f\d]{24}$)(\d+[a-f]|[a-f]+\d)'
+  Epoch:
+    type: integer
+    format: int64
+    description: 'Epoch time in milliseconds.'
