@@ -42,15 +42,28 @@ public class TicketService {
 
     public List<TicketResponse> getTicketResponses(TicketQueryParameter param) {
         String nameKeyword = Optional.ofNullable(param.getKeyword()).orElse("");
-        int priceFrom = Optional.ofNullable(param.getCreateDateFrom()).orElse(0);
-        int priceTo = Optional.ofNullable(param.getCreateDateTo()).orElse(Integer.MAX_VALUE);
+        int dateFrom = Optional.ofNullable(param.getCreateDateFrom()).orElse(0);
+        int dateTo = Optional.ofNullable(param.getCreateDateTo()).orElse(Integer.MAX_VALUE);
         Sort sort = configureSort(param.getOrderBy(), param.getSortRule());
 
-        List<Ticket> products = repository.findByCreateDateToBetweenAndSummaryLikeIgnoreCase(priceFrom, priceTo, nameKeyword, sort);
-
-        return products.stream()
+        List<Ticket> tickets = repository.findByCreateDateToBetweenAndSummaryLikeIgnoreCase(dateFrom, dateTo, nameKeyword, sort);
+        return tickets.stream()
                 .map(TicketConverter::toTicketResponse)
                 .collect(Collectors.toList());
+    }
+
+    public List<TicketResponse> getTypeTicketResponses(String type) {
+        List<Ticket> tickets = repository.findByTicketTypeLikeIgnoreCase(type);
+
+        return tickets.stream()
+                .map(TicketConverter::toTicketResponse)
+                .collect(Collectors.toList());
+    }
+
+    public TicketResponse getTypeTicketResponsesById(String type, String id) {
+        Ticket tickets = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
+
+        return TicketConverter.toTicketResponse(tickets);
     }
 
     public TicketResponse createTicket(TicketRequest request) {

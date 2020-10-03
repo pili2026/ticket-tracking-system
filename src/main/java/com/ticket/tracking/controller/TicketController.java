@@ -28,17 +28,24 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<TicketResponse> getTicket(@PathVariable("id") String id) {
-        TicketResponse ticket = ticketService.getTicketResponse(id);
-        return ResponseEntity.ok(ticket);
-    }
-
     @GetMapping
     public ResponseEntity<List<TicketResponse>> getTickets(@ModelAttribute TicketQueryParameter param) {
         List<TicketResponse> tickets = ticketService.getTicketResponses(param);
         return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/{type}")
+    public ResponseEntity<List<TicketResponse>> getTypeTickets(@PathVariable("type") String type) {
+        List<TicketResponse> tickets = ticketService.getTypeTicketResponses(type);
+        return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("/{type}/{id}")
+    public ResponseEntity<TicketResponse> getTypeTicketById(@PathVariable("type") String type,
+                                                            @PathVariable("id") String id) {
+
+        TicketResponse ticket = ticketService.getTypeTicketResponsesById(type, id);
+        return ResponseEntity.ok(ticket);
     }
 
     @PostMapping

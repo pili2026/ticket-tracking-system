@@ -1,6 +1,7 @@
 package com.ticket.tracking.repository;
 
 import com.ticket.tracking.entity.Ticket;
+import com.ticket.tracking.entity.TicketResponse;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
@@ -19,6 +20,12 @@ public interface TickRepository  extends MongoRepository<Ticket, String> {
 
     @Query("{'summary': {'$regex': ?0, '$options': 'i'}}")
     List<Ticket> findBySummaryLikeIgnoreCase(String summary);
+
+    @Query("{'ticketType': {'$regex': ?0, '$options': 'i'}}")
+    List<Ticket> findByTicketTypeLikeIgnoreCase(String ticketType);
+
+    @Query("{'ticketType': {'$regex': ?0, '$options': 'i'}, '_id': ?1}")
+    Ticket findByTicketTypeByIdLikeIgnoreCase(String ticketType, String id);
 
     @Query("{'$and': [{'createDate': {'$gte': ?0, '$lte': ?1}}, {'summary': {'$regex': ?2, '$options': 'i'}}]}")
     List<Ticket> findByCreateDateBetweenAndSummaryLikeIgnoreCase(int createDateFrom, int createDateTo, String summary);
