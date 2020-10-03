@@ -1,6 +1,8 @@
 package com.ticket.tracking.service;
 
 import com.ticket.tracking.entity.Ticket;
+import com.ticket.tracking.entity.TicketType;
+import com.ticket.tracking.exception.InvalidValueException;
 import com.ticket.tracking.exception.NotFoundException;
 import com.ticket.tracking.parameter.TicketQueryParameter;
 import com.ticket.tracking.repository.TickRepository;
@@ -30,9 +32,20 @@ public class TicketService {
     }
 
     public Ticket createTicket(Ticket request) {
-        Ticket ticket = new Ticket();
-        ticket.setSummary(request.getSummary());
-        ticket.setCreateDate(request.getCreateDate());
+        Ticket ticket = ticketObj(request);
+        System.out.println(ticket.getTicketType());
+        if (ticket.getTicketType().equals("invalid")) {
+            throw new InvalidValueException("Invalid ticket type");
+        }
+        if (ticket.getPriority().equals("invalid")) {
+            throw new InvalidValueException("Invalid priority");
+        }
+        if (ticket.getSeverity().equals("invalid")) {
+            throw new InvalidValueException("Invalid severity");
+        }
+        if (ticket.getTicketStatus().equals("invalid")) {
+            throw new InvalidValueException("Invalid ticket status");
+        }
 
         return repository.insert(ticket);
     }
@@ -70,5 +83,22 @@ public class TicketService {
         }
 
         return sort;
+    }
+
+    private Ticket ticketObj(Ticket request) {
+        Ticket ticket = new Ticket();
+        ticket.setSummary(request.getSummary());
+        ticket.setDescription(request.getDescription());
+        ticket.setPriority(request.getPriority());
+        ticket.setSeverity(request.getSeverity());
+        ticket.setTicketStatus(request.getTicketStatus());
+        ticket.setTicketType(request.getTicketType());
+        ticket.setCreateDate(request.getCreateDate());
+        ticket.setExpectedDate(request.getExpectedDate());
+        ticket.setResolveDate(request.getResolveDate());
+        ticket.setAssignee(request.getAssignee());
+        ticket.setReporter(request.getReporter());
+
+        return ticket;
     }
 }

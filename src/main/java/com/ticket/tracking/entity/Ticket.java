@@ -2,6 +2,10 @@ package com.ticket.tracking.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
+
 @Document(collection = "tickets")
 // define ticket object
 public class Ticket {
@@ -9,6 +13,7 @@ public class Ticket {
     private String summary;
     private String description;
     private String ticketStatus;
+    private String ticketType;
     private String priority;
     private String severity;
     private int createDate;
@@ -22,12 +27,14 @@ public class Ticket {
 
     }
 
-    public Ticket(String id, String summary, String description, String ticketStatus, String priority, String severity,
-                  int createDate, int expectedDate, int resolveDate, String reporter, String assignee) {
+    public Ticket(String id, String summary, String description, String ticketStatus, String ticketType,
+                  String priority, String severity, int createDate, int expectedDate, int resolveDate,
+                  String reporter, String assignee) {
         this.id = id;
         this.summary = summary;
         this.description = description;
         this.ticketStatus = ticketStatus;
+        this.ticketType = ticketType;
         this.priority = priority;
         this.severity = severity;
         this.createDate = createDate;
@@ -65,8 +72,32 @@ public class Ticket {
         return ticketStatus;
     }
 
-    public void setTicketStatus(String priority) {
-        this.ticketStatus = ticketStatus;
+    public void setTicketStatus(String ticketStatus) {
+        String[] targetTypeArray = {"New", "Start", "Close", "Resolve", "Verify"};
+        for (String s: targetTypeArray) {
+            if (s.equals(ticketStatus)) {
+                this.ticketStatus = ticketStatus;
+            } else {
+                this.ticketStatus = "invalid";
+            }
+            break;
+        }
+    }
+
+    public String getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(String ticketType) {
+        String[] targetTypeArray = {"Bug", "Feature", "TestCase"};
+        for (String s: targetTypeArray) {
+            if (s.equals(ticketType)) {
+                this.ticketType = ticketType;
+                break;
+            } else {
+                this.ticketType = "invalid";
+            }
+        }
     }
 
     public String getPriority() {
@@ -74,7 +105,17 @@ public class Ticket {
     }
 
     public void setPriority(String priority) {
-        this.priority = priority;
+        String[] targetTypeArray = {"High", "Medium", "Low"};
+        for (String s: targetTypeArray) {
+            if (s.equals(priority)) {
+                this.priority = priority;
+                break;
+            } else {
+                this.priority = "invalid";
+            }
+            break;
+        }
+
     }
 
     public String getSeverity() {
@@ -82,7 +123,15 @@ public class Ticket {
     }
 
     public void setSeverity(String severity) {
-        this.severity = severity;
+        String[] targetTypeArray = {"Critical", "Major", "Moderate", "Minor", "Cosmetic"};
+        for (String s: targetTypeArray) {
+            if (s.equals(severity)) {
+                this.severity = severity;
+            } else {
+                this.severity = "invalid";
+            }
+            break;
+        }
     }
 
     public int getCreateDate() {
