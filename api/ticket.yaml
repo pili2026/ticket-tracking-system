@@ -206,6 +206,14 @@ paths:
       operationId: "addRoles"
       produces:
         - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Delete tickets"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
       responses:
         200:
           description: "successful"
@@ -261,6 +269,14 @@ paths:
       operationId: "deleteTicket"
       produces:
         - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Delete different id ticket"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/Ticket"
       responses:
         200:
           description: "successful"
@@ -386,7 +402,6 @@ definitions:
               - "RD"
               - "QA"
               - "PM"
-
   MongoObjId:
     type: string
     format: ObjectId

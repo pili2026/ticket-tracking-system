@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface TickRepository  extends MongoRepository<Ticket, String> {
 
-    @Query("{'$and': [{'priority': {'$gte': ?0, '$lte': ?1}}, {'summary': {'$regex': ?2, '$options': 'i'}}]}")
-    List<Ticket> findByPriorityBetweenAndSummaryLikeIgnoreCase(int priorityFrom, int priorityTo, String summary, Sort sort);
+    @Query("{'$and': [{'createDate': {'$gte': ?0, '$lte': ?1}}, {'summary': {'$regex': ?2, '$options': 'i'}}]}")
+    List<Ticket> findByCreateDateToBetweenAndSummaryLikeIgnoreCase(int createDateFrom, int createDateTo, String summary, Sort sort);
 
     @Query("{'priority': {'$gte': ?0, '$lte': ?1}}")
     List<Ticket> findByPriorityBetween(int from, int to);
@@ -20,8 +20,8 @@ public interface TickRepository  extends MongoRepository<Ticket, String> {
     @Query("{'summary': {'$regex': ?0, '$options': 'i'}}")
     List<Ticket> findBySummaryLikeIgnoreCase(String summary);
 
-    @Query("{'$and': [{'price': {'$gte': ?0, '$lte': ?1}}, {'summary': {'$regex': ?2, '$options': 'i'}}]}")
-    List<Ticket> findByPriorityBetweenAndSummaryLikeIgnoreCase(int priorityFrom, int priorityTo, String summary);
+    @Query("{'$and': [{'createDate': {'$gte': ?0, '$lte': ?1}}, {'summary': {'$regex': ?2, '$options': 'i'}}]}")
+    List<Ticket> findByCreateDateBetweenAndSummaryLikeIgnoreCase(int createDateFrom, int createDateTo, String summary);
 
     @Query(value = "{'_id': {'$in': ?0}}", count = true)
     int countByIdIn(List<String> ids);

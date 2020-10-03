@@ -40,7 +40,7 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<Ticket> createTicket(@RequestBody Ticket request) {
-        Ticket ticket = ticketService.createProduct(request);
+        Ticket ticket = ticketService.createTicket(request);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

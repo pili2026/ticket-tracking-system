@@ -86,7 +86,7 @@ public class TicketTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(ticket.getId()))
                 .andExpect(jsonPath("$.summary").value(ticket.getSummary()))
-                .andExpect(jsonPath("$.priority").value(ticket.getPriority()));
+                .andExpect(jsonPath("$.priority").value(ticket.getCreateDate()));
     }
 
     @Test
@@ -156,10 +156,10 @@ public class TicketTest {
         Assert.assertEquals("application/json;charset=UTF-8", mockHttpResponse.getContentType());
     }
 
-    private Ticket createTicket(String summary, int priority) {
+    private Ticket createTicket(String summary, int create_date) {
         Ticket ticket = new Ticket();
         ticket.setSummary(summary);
-        ticket.setPriority(priority);
+        ticket.setCreateDate(create_date);
 
         return ticket;
     }

@@ -2,8 +2,8 @@ package com.ticket.tracking.parameter;
 
 public class TicketQueryParameter {
     private String keyword;
-    private Integer priorityFrom;
-    private Integer priorityTo;
+    private Integer createDateFrom;
+    private Integer createDateTo;
     private String orderBy;
     private String sortRule;
 
@@ -15,20 +15,20 @@ public class TicketQueryParameter {
         this.keyword = keyword;
     }
 
-    public Integer getPriorityFrom() {
-        return priorityFrom;
+    public Integer getCreateDateFrom() {
+        return createDateFrom;
     }
 
-    public void setPriorityFrom(Integer priorityFrom) {
-        this.priorityFrom = priorityFrom;
+    public void setCreateDateFrom(Integer createDateFrom) {
+        this.createDateFrom = createDateFrom;
     }
 
-    public Integer getPriorityTo() {
-        return priorityTo;
+    public Integer getCreateDateTo() {
+        return createDateTo;
     }
 
-    public void setPriorityTo(Integer priorityTo) {
-        this.priorityTo = priorityTo;
+    public void setCreateDateTo(Integer createDateTo) {
+        this.createDateTo = createDateTo;
     }
 
     public String getOrderBy() {

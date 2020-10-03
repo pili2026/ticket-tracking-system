@@ -1,10 +1,8 @@
 package com.ticket.tracking.service;
 
 import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.exception.ConflictException;
 import com.ticket.tracking.exception.NotFoundException;
 import com.ticket.tracking.parameter.TicketQueryParameter;
-import com.ticket.tracking.repository.MockTicketDAO;
 import com.ticket.tracking.repository.TickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -31,10 +29,10 @@ public class TicketService {
                 .orElseThrow(() -> new NotFoundException("Can't find ticket."));
     }
 
-    public Ticket createProduct(Ticket request) {
+    public Ticket createTicket(Ticket request) {
         Ticket ticket = new Ticket();
         ticket.setSummary(request.getSummary());
-        ticket.setPriority(request.getPriority());
+        ticket.setCreateDate(request.getCreateDate());
 
         return repository.insert(ticket);
     }
@@ -45,7 +43,7 @@ public class TicketService {
         Ticket ticket = new Ticket();
         ticket.setId(oldTicket.getId());
         ticket.setSummary(request.getSummary());
-        ticket.setPriority(request.getPriority());
+        ticket.setCreateDate(request.getCreateDate());
 
         return repository.save(ticket);
     }
@@ -56,12 +54,12 @@ public class TicketService {
 
     public List<Ticket> getTickets(TicketQueryParameter param) {
         String nameKeyword = Optional.ofNullable(param.getKeyword()).orElse("");
-        int priorityFrom = Optional.ofNullable(param.getPriorityFrom()).orElse(0);
-        int priorityTo = Optional.ofNullable(param.getPriorityTo()).orElse(Integer.MAX_VALUE);
+        int createDateFrom = Optional.ofNullable(param.getCreateDateFrom()).orElse(0);
+        int createDateTo = Optional.ofNullable(param.getCreateDateTo()).orElse(Integer.MAX_VALUE);
 
         Sort sort = configureSort(param.getOrderBy(), param.getSortRule());
 
-        return repository.findByPriorityBetweenAndSummaryLikeIgnoreCase(priorityFrom, priorityTo, nameKeyword, sort);
+        return repository.findByCreateDateToBetweenAndSummaryLikeIgnoreCase(createDateFrom, createDateTo, nameKeyword, sort);
     }
 
     private Sort configureSort(String orderBy, String sortRule) {
