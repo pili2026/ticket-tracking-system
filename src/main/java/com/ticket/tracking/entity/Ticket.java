@@ -1,5 +1,8 @@
 package com.ticket.tracking.entity;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "tickets")
 // define ticket object
 public class Ticket {
     private String id;

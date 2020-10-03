@@ -27,7 +27,7 @@ public class TicketController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Ticket> getProduct(@PathVariable("id") String id) {
+    public ResponseEntity<Ticket> getTicket(@PathVariable("id") String id) {
         Ticket ticket = ticketService.getTicket(id);
         return ResponseEntity.ok(ticket);
     }

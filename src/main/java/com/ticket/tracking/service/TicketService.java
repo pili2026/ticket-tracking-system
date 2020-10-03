@@ -5,10 +5,14 @@ import com.ticket.tracking.exception.ConflictException;
 import com.ticket.tracking.exception.NotFoundException;
 import com.ticket.tracking.parameter.TicketQueryParameter;
 import com.ticket.tracking.repository.MockTicketDAO;
+import com.ticket.tracking.repository.TickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /*
 業務邏輯層：又稱作Service，會被Controller呼叫。它負責根據請求來進行資料處理，並回傳結果。也可能被其他Service呼叫。
@@ -20,38 +24,53 @@ Business logic layer:
 @Service
 public class TicketService {
     @Autowired
-    private MockTicketDAO ticketDAO;
-
-    public Ticket createProduct(Ticket request) {
-        boolean isIdDuplicated = ticketDAO.find(request.getId()).isPresent();
-        if (isIdDuplicated) {
-            throw new ConflictException("The id of the product is duplicated.");
-        }
-
-        Ticket product = new Ticket();
-        product.setId(request.getId());
-        product.setSummary(request.getSummary());
-        product.setPriority(request.getPriority());
-
-        return ticketDAO.insert(product);
-    }
+    private TickRepository repository;
 
     public Ticket getTicket(String id) {
-        return ticketDAO.find(id)
-                .orElseThrow(() -> new NotFoundException("Can't find product."));
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Can't find ticket."));
+    }
+
+    public Ticket createProduct(Ticket request) {
+        Ticket ticket = new Ticket();
+        ticket.setSummary(request.getSummary());
+        ticket.setPriority(request.getPriority());
+
+        return repository.insert(ticket);
     }
 
     public Ticket replaceTicket(String id, Ticket request) {
-        Ticket ticket = getTicket(id);
-        return ticketDAO.replace(ticket.getId(), request);
+        Ticket oldTicket = getTicket(id);
+
+        Ticket ticket = new Ticket();
+        ticket.setId(oldTicket.getId());
+        ticket.setSummary(request.getSummary());
+        ticket.setPriority(request.getPriority());
+
+        return repository.save(ticket);
     }
 
     public void deleteTicket(String id) {
-        Ticket ticket = getTicket(id);
-        ticketDAO.delete(ticket.getId());
+        repository.deleteById(id);
     }
 
     public List<Ticket> getTickets(TicketQueryParameter param) {
-        return ticketDAO.find(param);
+        String nameKeyword = Optional.ofNullable(param.getKeyword()).orElse("");
+        int priorityFrom = Optional.ofNullable(param.getPriorityFrom()).orElse(0);
+        int priorityTo = Optional.ofNullable(param.getPriorityTo()).orElse(Integer.MAX_VALUE);
+
+        Sort sort = configureSort(param.getOrderBy(), param.getSortRule());
+
+        return repository.findByPriorityBetweenAndSummaryLikeIgnoreCase(priorityFrom, priorityTo, nameKeyword, sort);
+    }
+
+    private Sort configureSort(String orderBy, String sortRule) {
+        Sort sort = Sort.unsorted();
+        if (Objects.nonNull(orderBy) && Objects.nonNull(sortRule)) {
+            Sort.Direction direction = Sort.Direction.fromString(sortRule);
+            sort = new Sort(direction, orderBy);
+        }
+
+        return sort;
     }
 }
