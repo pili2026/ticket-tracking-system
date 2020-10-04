@@ -42,8 +42,8 @@ public class RoleService {
     }
 
     // get role with specified type and ID
-    public RoleResponse getRoleResponsesByTypeId(String roleType, String id) {
-        Role roles = roleRepository.findByRoleTypeByIdLikeIgnoreCase(roleType, id);
+    public RoleResponse getRoleResponsesByTypeId(String roleType, String account) {
+        Role roles = roleRepository.findByRoleTypeByAccountLikeIgnoreCase(roleType, account);
         return RoleConverter.toRoleResponse(roles);
     }
 
@@ -51,6 +51,20 @@ public class RoleService {
         Role role = roleObj(request);
         roleRepository.insert(role);
         return RoleConverter.toRoleResponse(role);
+    }
+
+    // Updated role information by account not all
+    public RoleResponse replaceRoleTypeByAccount(String roleType, String account, RoleRequest request) {
+        Role oldRole = roleRepository.findByRoleTypeByAccountLikeIgnoreCase(roleType, account);
+        Role newRole = RoleConverter.toRole(request);
+        newRole.setId(oldRole.getId());
+        roleRepository.save(newRole);
+
+        return  RoleConverter.toRoleResponse(newRole);
+    }
+
+    public void deleteRole(String id) {
+        roleRepository.deleteById(id);
     }
 
     private Sort configureSort(String orderBy, String sortRule) {

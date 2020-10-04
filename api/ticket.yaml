@@ -30,7 +30,7 @@ paths:
       parameters:
       - in: "body"
         name: "body"
-        description: "Pet object that needs to be added to the store"
+        description: "Returns a list of users"
         required: true
         schema:
           type: "array"
@@ -100,6 +100,57 @@ paths:
         - application/json
       responses:
         "200":
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+
+  /role/{role_type}/{role_account}:
+    get:
+      tags:
+        - "role"
+      summary: Returns a list of users.
+      description: For admin, get all users.
+      operationId: "getRoles"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Get role information"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/RoleUpdate"
+      responses:
+        "200":
+          schema:
+            items:
+              $ref: "#/definitions/RoleUpdate"
+          description: "successful"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+        - "role"
+      summary: Update user information.
+      description: Update user information.
+      operationId: "updateRoles"
+      produces:
+        - application/json
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Update role information"
+          required: true
+          schema:
+            items:
+              $ref: "#/definitions/RoleUpdate"
+      responses:
+        "200":
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/RoleUpdate"
           description: "successful"
         "400":
           description: "Invalid status value"
@@ -375,6 +426,21 @@ definitions:
               - "RD"
               - "QA"
               - "PM"
+  RoleUpdate:
+    type: "object"
+    required:
+      - "account"
+    properties:
+      status:
+        type: "integer"
+        example: 200
+      message:
+        type: "object"
+        properties:
+          password:
+            type: "string"
+            example: "Jeremy"
+
   createRole:
     type: "object"
     required:

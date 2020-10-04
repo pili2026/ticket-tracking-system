@@ -55,4 +55,18 @@ public class RoleController {
 
         return ResponseEntity.created(location).body(role);
     }
+
+    @PutMapping("/{role_type}/{account}")
+    public ResponseEntity<RoleResponse> replaceRole(
+            @PathVariable("role_type") String roleType, @PathVariable("account") String account,
+            @Valid @RequestBody RoleRequest request) {
+        RoleResponse role = roleService.replaceRoleTypeByAccount(roleType, account, request);
+        return ResponseEntity.ok(role);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRole(@PathVariable("id") String id) {
+        roleService.deleteRole(id);
+        return ResponseEntity.noContent().build();
+    }
 }

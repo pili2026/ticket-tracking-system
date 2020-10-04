@@ -15,8 +15,9 @@ public interface RoleRepository extends MongoRepository<Role, String> {
     @Query("{'$and': [{'createDate': {'$gte': ?0, '$lte': ?1}}, {'roleType': {'$regex': ?2, '$options': 'i'}}]}")
     List<Role> findByCreateDateToBetweenAndSummaryLikeIgnoreCase(int createDateFrom, int createDateTo, String roleType, Sort sort);
 
-    @Query("{'roleType': {'$regex': ?0, '$options': 'i'}, '_id': ?1}")
-    Role findByRoleTypeByIdLikeIgnoreCase(String roleType, String id);
+    @Query("{'roleType': {'$regex': ?0, '$options': 'i'}, 'account': ?1}")
+    Role findByRoleTypeByAccountLikeIgnoreCase(String roleType, String account);
+
 
     @Query("{'roleType': {'$regex': ?0, '$options': 'i'}}")
     List<Role> findByRoleTypeLikeIgnoreCase(String roleType);

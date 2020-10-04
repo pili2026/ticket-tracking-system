@@ -1,8 +1,6 @@
 package com.ticket.tracking.convert;
 
-import com.ticket.tracking.entity.Role;
-import com.ticket.tracking.entity.RoleRequest;
-import com.ticket.tracking.entity.RoleResponse;
+import com.ticket.tracking.entity.*;
 
 public class RoleConverter {
     private RoleConverter() {}
