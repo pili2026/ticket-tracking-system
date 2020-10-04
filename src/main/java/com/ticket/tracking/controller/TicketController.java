@@ -36,7 +36,7 @@ public class TicketController {
 
     @GetMapping("/{type}")
     public ResponseEntity<List<TicketResponse>> getTypeTickets(@PathVariable("type") String type) {
-        List<TicketResponse> tickets = ticketService.getTypeTicketResponses(type);
+        List<TicketResponse> tickets = ticketService.getTicketResponsesByType(type);
         return ResponseEntity.ok(tickets);
     }
 
@@ -48,9 +48,10 @@ public class TicketController {
         return ResponseEntity.ok(ticket);
     }
 
-    @PostMapping
-    public ResponseEntity<TicketResponse> createTicket(@Valid @RequestBody TicketRequest request) {
-        TicketResponse ticket = ticketService.createTicket(request);
+    @PostMapping("/{type}")
+    public ResponseEntity<TicketResponse> createTicket(@PathVariable("type") String type,
+                                                       @Valid @RequestBody TicketRequest request) {
+        TicketResponse ticket = ticketService.createTicketByType(type, request);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -61,10 +62,11 @@ public class TicketController {
         return ResponseEntity.created(location).body(ticket);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{type}/{id}")
     public ResponseEntity<TicketResponse> replaceTicket(
-            @PathVariable("id") String id, @Valid @RequestBody TicketRequest request) {
-        TicketResponse ticket = ticketService.replaceTicket(id, request);
+            @PathVariable("type") String type, @PathVariable("id") String id,
+            @Valid @RequestBody TicketRequest request) {
+        TicketResponse ticket = ticketService.replaceTicketTypeById(type, id, request);
         return ResponseEntity.ok(ticket);
     }
 

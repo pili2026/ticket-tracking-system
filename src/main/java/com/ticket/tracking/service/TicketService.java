@@ -40,6 +40,7 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticket);
     }
 
+    // get all ticket, regardless of category
     public List<TicketResponse> getTicketResponses(TicketQueryParameter param) {
         String nameKeyword = Optional.ofNullable(param.getKeyword()).orElse("");
         int dateFrom = Optional.ofNullable(param.getCreateDateFrom()).orElse(0);
@@ -50,20 +51,6 @@ public class TicketService {
         return tickets.stream()
                 .map(TicketConverter::toTicketResponse)
                 .collect(Collectors.toList());
-    }
-
-    public List<TicketResponse> getTypeTicketResponses(String type) {
-        List<Ticket> tickets = repository.findByTicketTypeLikeIgnoreCase(type);
-
-        return tickets.stream()
-                .map(TicketConverter::toTicketResponse)
-                .collect(Collectors.toList());
-    }
-
-    public TicketResponse getTypeTicketResponsesById(String type, String id) {
-        Ticket tickets = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
-
-        return TicketConverter.toTicketResponse(tickets);
     }
 
     public TicketResponse createTicket(TicketRequest request) {
@@ -85,6 +72,7 @@ public class TicketService {
         return TicketConverter.toTicketResponse(ticket);
     }
 
+    // updated ticket
     public TicketResponse replaceTicket(String id, TicketRequest request) {
         Ticket oldTicket = getTicket(id);
         Ticket newTicket = TicketConverter.toTicket(request);
@@ -116,6 +104,71 @@ public class TicketService {
         }
 
         return sort;
+    }
+
+    /*  ----with ticket type and id----  */
+    // updated ticket with specified type and ID
+    public TicketResponse replaceTicketTypeById(String type, String id, TicketRequest request) {
+        Ticket oldTicket = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
+        Ticket newTicket = TicketConverter.toTicket(request);
+        newTicket.setId(oldTicket.getId());
+        repository.save(newTicket);
+
+        return TicketConverter.toTicketResponse(newTicket);
+    }
+
+    // get ticket with specified type and ID
+    public TicketResponse getTypeTicketResponsesById(String type, String id) {
+        Ticket tickets = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
+
+        return TicketConverter.toTicketResponse(tickets);
+    }
+
+    /*  ----with ticket type----  */
+    // get same tickets,
+    public List<TicketResponse> getTicketResponsesByType(String type) {
+        List<Ticket> tickets = repository.findByTicketTypeLikeIgnoreCase(type);
+
+        return tickets.stream()
+                .map(TicketConverter::toTicketResponse)
+                .collect(Collectors.toList());
+    }
+
+    public TicketResponse createTicketByType(String type, TicketRequest request) {
+        Ticket ticket = ticketObjByType(type, request);
+        if (ticket.getTicketType().equals("invalid")) {
+            throw new InvalidValueException("Invalid ticket type");
+        }
+        if (ticket.getPriority().equals("invalid")) {
+            throw new InvalidValueException("Invalid priority");
+        }
+        if (ticket.getSeverity().equals("invalid")) {
+            throw new InvalidValueException("Invalid severity");
+        }
+        if (ticket.getTicketStatus().equals("invalid")) {
+            throw new InvalidValueException("Invalid ticket status");
+        }
+        repository.insert(ticket);
+
+        return TicketConverter.toTicketResponse(ticket);
+    }
+
+    /*  ----with ticket object----  */
+    private Ticket ticketObjByType(String type, TicketRequest request) {
+        Ticket ticket = new Ticket();
+        ticket.setSummary(request.getSummary());
+        ticket.setDescription(request.getDescription());
+        ticket.setPriority(request.getPriority());
+        ticket.setSeverity(request.getSeverity());
+        ticket.setTicketStatus(request.getTicketStatus());
+        ticket.setTicketType(type);
+        ticket.setCreateDate(request.getCreateDate());
+        ticket.setExpectedDate(request.getExpectedDate());
+        ticket.setResolveDate(request.getResolveDate());
+        ticket.setAssignee(request.getAssignee());
+        ticket.setReporter(request.getReporter());
+
+        return ticket;
     }
 
     private Ticket ticketObj(TicketRequest request) {
