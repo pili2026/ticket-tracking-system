@@ -22,47 +22,47 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers(@ModelAttribute UserQueryParameter param) {
-        List<UserResponse> roles = userService.getUserResponses(param);
-        return ResponseEntity.ok(roles);
+        List<UserResponse> users = userService.getUserResponses(param);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{user_type}")
     public ResponseEntity<List<UserResponse>> getUsersByType(@PathVariable("user_type") String userType) {
-        List<UserResponse> roles = userService.getUserResponsesByType(userType);
-        return ResponseEntity.ok(roles);
+        List<UserResponse> users = userService.getUserResponsesByType(userType);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{user_type}/{id}")
     public ResponseEntity<UserResponse> getUserByTypeId(@PathVariable("user_type") String userType,
-                                                         @PathVariable("id") String id) {
+                                                        @PathVariable("id") String id) {
 
-        UserResponse role = userService.getUserResponsesByTypeId(userType, id);
-        return ResponseEntity.ok(role);
+        UserResponse user = userService.getUserResponsesByTypeId(userType, id);
+        return ResponseEntity.ok(user);
     }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody UserRequest request) {
-        UserResponse role = userService.createUser(request);
+        UserResponse user = userService.createUser(request);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(role.getId())
+                .buildAndExpand(user.getId())
                 .toUri();
 
-        return ResponseEntity.created(location).body(role);
+        return ResponseEntity.created(location).body(user);
     }
 
     @PutMapping("/{user_type}/{account}")
     public ResponseEntity<UserResponse> replaceUser(
             @PathVariable("user_type") String userType, @PathVariable("account") String account,
             @Valid @RequestBody UserRequest request) {
-        UserResponse role = userService.replaceUserTypeByAccount(userType, account, request);
-        return ResponseEntity.ok(role);
+        UserResponse user = userService.replaceUserTypeByAccount(userType, account, request);
+        return ResponseEntity.ok(user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRole(@PathVariable("id") String id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }

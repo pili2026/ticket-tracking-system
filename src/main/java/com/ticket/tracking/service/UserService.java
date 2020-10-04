@@ -44,12 +44,12 @@ public class UserService {
 
     // get role with specified type and ID
     public UserResponse getUserResponsesByTypeId(String userType, String account) {
-        User roles = userRepository.findByUserTypeByAccountLikeIgnoreCase(userType, account);
-        return UserConverter.toUserResponse(roles);
+        User users = userRepository.findByUserTypeByAccountLikeIgnoreCase(userType, account);
+        return UserConverter.toUserResponse(users);
     }
 
     public UserResponse createUser(UserRequest request) {
-        User user = roleObj(request);
+        User user = userObj(request);
         userRepository.insert(user);
         return UserConverter.toUserResponse(user);
     }
@@ -79,7 +79,7 @@ public class UserService {
     }
 
     /*  ----with role object----  */
-    private User roleObj(UserRequest request) {
+    private User userObj(UserRequest request) {
         User user = new User();
         user.setAccount(request.getAccount());
         user.setPassword(request.getPassword());

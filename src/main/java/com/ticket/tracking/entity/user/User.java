@@ -2,7 +2,7 @@ package com.ticket.tracking.entity.user;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "roles")
+@Document(collection = "users")
 public class User {
 
     private String id;
