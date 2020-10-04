@@ -118,14 +118,14 @@ public class TicketService {
     }
 
     // get ticket with specified type and ID
-    public TicketResponse getTypeTicketResponsesById(String type, String id) {
+    public TicketResponse getTicketResponsesByTypeId(String type, String id) {
         Ticket tickets = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
 
         return TicketConverter.toTicketResponse(tickets);
     }
 
     /*  ----with ticket type----  */
-    // get same tickets,
+    // get same tickets
     public List<TicketResponse> getTicketResponsesByType(String type) {
         List<Ticket> tickets = repository.findByTicketTypeLikeIgnoreCase(type);
 

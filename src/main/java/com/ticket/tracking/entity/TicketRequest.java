@@ -24,13 +24,13 @@ public class TicketRequest {
     @NotEmpty(message = "Severity is undefined.")
     private String severity;
 
-    @Min(value = 0, message = "Create data is invalid.")
+    @Min(value = 0, message = "Create date is invalid.")
     private int createDate;
 
-    @Min(value = 0, message = "Expected data is invalid.")
+    @Min(value = 0, message = "Expected date is invalid.")
     private int expectedDate;
 
-    @Min(value = 0, message = "Resolve data is invalid.")
+    @Min(value = 0, message = "Resolve date is invalid.")
     private int resolveDate;
 
     @NotEmpty(message = "Reporter is undefined.")

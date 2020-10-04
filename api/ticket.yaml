@@ -104,7 +104,7 @@ paths:
         "400":
           description: "Invalid status value"
 
-  /role/{role_type}/tickets:
+  /role/{role_type}/{role_account}/tickets:
     get:
       tags:
         - "tickets"
@@ -152,7 +152,7 @@ paths:
         "400":
           description: "Invalid status value"
 
-  /role/{role_type}/tickets/{ticket_type}:
+  /role/{role_type}/{role_account}/tickets/{ticket_type}:
     get:
       tags:
         - "tickets"
@@ -220,7 +220,7 @@ paths:
         400:
           description: "Invalid status value"
 
-  /role/{role_type}/tickets/{ticket_type}/{id}:
+  /role/{role_type}/{role_account}/tickets/{ticket_type}/{id}:
     get:
       tags:
         - "tickets"
@@ -402,6 +402,13 @@ definitions:
               - "RD"
               - "QA"
               - "PM"
+          authority:
+            type: integer
+            enum:
+              - 0
+              - 1
+              - 2
+              - 3
   MongoObjId:
     type: string
     format: ObjectId

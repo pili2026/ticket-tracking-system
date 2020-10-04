@@ -35,21 +35,21 @@ public class TicketController {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<List<TicketResponse>> getTypeTickets(@PathVariable("type") String type) {
+    public ResponseEntity<List<TicketResponse>> getTicketsByType(@PathVariable("type") String type) {
         List<TicketResponse> tickets = ticketService.getTicketResponsesByType(type);
         return ResponseEntity.ok(tickets);
     }
 
     @GetMapping("/{type}/{id}")
-    public ResponseEntity<TicketResponse> getTypeTicketById(@PathVariable("type") String type,
+    public ResponseEntity<TicketResponse> getTicketByTypeId(@PathVariable("type") String type,
                                                             @PathVariable("id") String id) {
 
-        TicketResponse ticket = ticketService.getTypeTicketResponsesById(type, id);
+        TicketResponse ticket = ticketService.getTicketResponsesByTypeId(type, id);
         return ResponseEntity.ok(ticket);
     }
 
     @PostMapping("/{type}")
-    public ResponseEntity<TicketResponse> createTicket(@PathVariable("type") String type,
+    public ResponseEntity<TicketResponse> createTicketByType(@PathVariable("type") String type,
                                                        @Valid @RequestBody TicketRequest request) {
         TicketResponse ticket = ticketService.createTicketByType(type, request);
 
