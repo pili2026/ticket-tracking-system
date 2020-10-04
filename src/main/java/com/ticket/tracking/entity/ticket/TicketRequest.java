@@ -1,4 +1,4 @@
-package com.ticket.tracking.entity;
+package com.ticket.tracking.entity.ticket;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;

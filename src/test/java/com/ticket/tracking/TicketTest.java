@@ -1,6 +1,6 @@
 package com.ticket.tracking;
 
-import com.ticket.tracking.entity.Ticket;
+import com.ticket.tracking.entity.ticket.Ticket;
 import com.ticket.tracking.repository.TickRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;

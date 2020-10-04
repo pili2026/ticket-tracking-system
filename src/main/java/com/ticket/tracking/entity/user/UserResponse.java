@@ -1,17 +1,13 @@
-package com.ticket.tracking.entity;
+package com.ticket.tracking.entity.user;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "roles")
-public class Role {
-
+public class UserResponse {
     private String id;
     private String account;
     private String password;
-    private String roleType;
+    private String userType;
     private int authority;
 
-    public Role() {}
+    public UserResponse() {}
 
     public String getId() {
         return id;
@@ -36,12 +32,12 @@ public class Role {
         this.password = password;
     }
 
-    public String getRoleType() {
-        return roleType;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setRoleType(String roleType) {
-        this.roleType = roleType;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public int getAuthority() {

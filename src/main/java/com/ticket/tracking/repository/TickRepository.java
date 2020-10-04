@@ -1,7 +1,6 @@
 package com.ticket.tracking.repository;
 
-import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.entity.TicketResponse;
+import com.ticket.tracking.entity.ticket.Ticket;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;

@@ -1,9 +1,9 @@
-package com.ticket.tracking.entity;
+package com.ticket.tracking.entity.user;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
-public class RoleRequest {
+public class UserRequest {
 
     @NotEmpty(message = "Account is undefined.")
     private String account;
@@ -11,8 +11,8 @@ public class RoleRequest {
     @NotEmpty(message = "Password is undefined.")
     private String password;
 
-    @NotEmpty(message = "RoleType is undefined.")
-    private String roleType;
+    @NotEmpty(message = "UserType is undefined.")
+    private String userType;
 
     @Min(value = 0, message = "Authority is invalid.")
     private int authority;
@@ -33,12 +33,12 @@ public class RoleRequest {
         this.password = password;
     }
 
-    public String getRoleType() {
-        return roleType;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setRoleType(String roleType) {
-        this.roleType = roleType;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public int getAuthority() {

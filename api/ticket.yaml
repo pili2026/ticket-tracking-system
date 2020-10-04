@@ -5,8 +5,8 @@ info:
   version: 1.0.0
 host: api.example.com
 tags:
-  - name: "role"
-    description: "About role page"
+  - name: "user"
+    description: "About user page"
     externalDocs:
       description: "Find out more"
       url: "http://localhost:8080"
@@ -18,84 +18,84 @@ tags:
 schemes:
   - http
 paths:
-  /role/roles:
+  /user/users:
     get:
       tags:
-        - "role"
+        - "user"
       summary: Returns a list of users.
       description: For admin, get all users.
-      operationId: "getRoles"
+      operationId: "getUsers"
       produces:
         - application/json
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Returns a list of users"
-        required: true
-        schema:
-          type: "array"
-          items:
-            $ref: "#/definitions/Role"
+        - in: "body"
+          name: "body"
+          description: "Returns a list of users"
+          required: true
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
       responses:
         "200":
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Role"
+              $ref: "#/definitions/User"
           description: "successful"
         "404":
           description: "Invalid status value"
     post:
       tags:
-        - "role"
-      summary: Create different role type.
-      description: Create new role.
-      operationId: "addRole"
+        - "user"
+      summary: Create different user type.
+      description: Create new user.
+      operationId: "addUser"
       produces:
         - application/json
       parameters:
         - in: "body"
           name: "body"
-          description: "Create different role type."
+          description: "Create different user type."
           required: true
           schema:
-            $ref: "#/definitions/createRole"
+            $ref: "#/definitions/createUser"
       responses:
         "200":
           schema:
             items:
-              $ref: "#/definitions/createRole"
+              $ref: "#/definitions/createUser"
           description: "successful"
         "400":
           description: "Invalid status value"
     put:
       tags:
-        - "role"
-      summary: Update different type role(admin).
-      description: Update different type role.
-      operationId: "updatedRole"
+        - "user"
+      summary: Update different type user(admin).
+      description: Update different type user.
+      operationId: "updatedUser"
       produces:
         - application/json
       parameters:
         - in: "body"
           name: "body"
-          description: "Update different type role"
+          description: "Update different type user"
           required: true
           schema:
-            $ref: "#/definitions/createRole"
+            $ref: "#/definitions/createUser"
       responses:
         "200":
           schema:
-            $ref: "#/definitions/createRole"
+            $ref: "#/definitions/createUser"
           description: "successful"
         "400":
           description: "Invalid status value"
     delete:
       tags:
-        - "role"
-      summary: Delete role.
-      description: Delete role.
-      operationId: "DeleteRole"
+        - "user"
+      summary: Delete user.
+      description: Delete user.
+      operationId: "DeleteUser"
       produces:
         - application/json
       responses:
@@ -104,63 +104,63 @@ paths:
         "400":
           description: "Invalid status value"
 
-  /role/{role_type}/{role_account}:
+  /user/{user_type}/{user_account}:
     get:
       tags:
-        - "role"
+        - "user"
       summary: Returns a list of users.
       description: For admin, get all users.
-      operationId: "getRoles"
+      operationId: "getUsers"
       produces:
         - application/json
       parameters:
         - in: "body"
           name: "body"
-          description: "Get role information"
+          description: "Get user information"
           required: true
           schema:
             items:
-              $ref: "#/definitions/RoleUpdate"
+              $ref: "#/definitions/UserUpdate"
       responses:
         "200":
           schema:
             items:
-              $ref: "#/definitions/RoleUpdate"
+              $ref: "#/definitions/UserUpdate"
           description: "successful"
         "400":
           description: "Invalid status value"
     put:
       tags:
-        - "role"
+        - "user"
       summary: Update user information.
       description: Update user information.
-      operationId: "updateRoles"
+      operationId: "updateUsers"
       produces:
         - application/json
       parameters:
         - in: "body"
           name: "body"
-          description: "Update role information"
+          description: "Update user information"
           required: true
           schema:
             items:
-              $ref: "#/definitions/RoleUpdate"
+              $ref: "#/definitions/UserUpdate"
       responses:
         "200":
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/RoleUpdate"
+              $ref: "#/definitions/UserUpdate"
           description: "successful"
         "400":
           description: "Invalid status value"
 
-  /role/{role_type}/{role_account}/tickets:
+  /user/{user_type}/{user_account}/tickets:
     get:
       tags:
         - "tickets"
       summary: Returns a list of tickets.
-      description: For different role type, get all tickets.
+      description: For different user type, get all tickets.
       produces:
         - application/json
       parameters:
@@ -182,8 +182,8 @@ paths:
       tags:
         - "tickets"
       summary: Create different type ticket(admin).
-      description: For different role, create ticket.
-      operationId: "addRoles"
+      description: For different user, create ticket.
+      operationId: "addUsers"
       produces:
         - application/json
       parameters:
@@ -203,7 +203,7 @@ paths:
         "400":
           description: "Invalid status value"
 
-  /role/{role_type}/{role_account}/tickets/{ticket_type}:
+  /user/{user_type}/{user_account}/tickets/{ticket_type}:
     get:
       tags:
         - "tickets"
@@ -229,8 +229,8 @@ paths:
       tags:
         - "tickets"
       summary: Create different type ticket(admin).
-      description: For different role, create ticket.
-      operationId: "addRoles"
+      description: For different user, create ticket.
+      operationId: "addUsers"
       produces:
         - application/json
       parameters:
@@ -253,8 +253,8 @@ paths:
       tags:
         - "tickets"
       summary: Create different type ticket(admin).
-      description: For different role, create ticket.
-      operationId: "addRoles"
+      description: For different user, create ticket.
+      operationId: "addUsers"
       produces:
         - application/json
       parameters:
@@ -271,7 +271,7 @@ paths:
         400:
           description: "Invalid status value"
 
-  /role/{role_type}/{role_account}/tickets/{ticket_type}/{id}:
+  /user/{user_type}/{user_account}/tickets/{ticket_type}/{id}:
     get:
       tags:
         - "tickets"
@@ -398,12 +398,12 @@ definitions:
           reporter:
             type: "string"
             example: "Code Leader"
-            description: "query role db"
+            description: "query user db"
           assignee:
             type: "string"
             example: "Jeremy"
-            description: "query role db"
-  Role:
+            description: "query user db"
+  User:
     type: "object"
     required:
       - "account"
@@ -419,14 +419,14 @@ definitions:
           account:
             type: "string"
             example: "Jeremy"
-          role_type:
+          user_type:
             type: "string"
             enum:
               - "Admin"
               - "RD"
               - "QA"
               - "PM"
-  RoleUpdate:
+  UserUpdate:
     type: "object"
     required:
       - "account"
@@ -441,7 +441,7 @@ definitions:
             type: "string"
             example: "Jeremy"
 
-  createRole:
+  createUser:
     type: "object"
     required:
       - "account"
@@ -461,7 +461,7 @@ definitions:
           password:
             type: "string"
             example: "pass"
-          role_type:
+          user_type:
             type: "string"
             enum:
               - "Admin"

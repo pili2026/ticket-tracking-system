@@ -1,4 +1,4 @@
-package com.ticket.tracking.entity;
+package com.ticket.tracking.entity.ticket;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

@@ -1,9 +1,9 @@
 package com.ticket.tracking.service;
 
 import com.ticket.tracking.convert.TicketConverter;
-import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.entity.TicketRequest;
-import com.ticket.tracking.entity.TicketResponse;
+import com.ticket.tracking.entity.ticket.Ticket;
+import com.ticket.tracking.entity.ticket.TicketRequest;
+import com.ticket.tracking.entity.ticket.TicketResponse;
 import com.ticket.tracking.exception.InvalidValueException;
 import com.ticket.tracking.exception.NotFoundException;
 import com.ticket.tracking.parameter.TicketQueryParameter;

@@ -1,8 +1,8 @@
 package com.ticket.tracking.convert;
 
-import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.entity.TicketRequest;
-import com.ticket.tracking.entity.TicketResponse;
+import com.ticket.tracking.entity.ticket.Ticket;
+import com.ticket.tracking.entity.ticket.TicketRequest;
+import com.ticket.tracking.entity.ticket.TicketResponse;
 import com.ticket.tracking.exception.InvalidValueException;
 
 public class TicketConverter {

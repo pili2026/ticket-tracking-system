@@ -1,4 +1,4 @@
-package com.ticket.tracking.entity;
+package com.ticket.tracking.entity.ticket;
 
 public class TicketResponse {
     private String id;

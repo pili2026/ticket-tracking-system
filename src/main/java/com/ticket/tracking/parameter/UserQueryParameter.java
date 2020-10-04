@@ -1,6 +1,6 @@
 package com.ticket.tracking.parameter;
 
-public class RoleQueryParameter {
+public class UserQueryParameter {
     private String keyword;
     private Integer createDateFrom;
     private Integer createDateTo;

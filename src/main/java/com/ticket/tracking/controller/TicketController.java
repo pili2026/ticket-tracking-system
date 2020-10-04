@@ -1,8 +1,7 @@
 package com.ticket.tracking.controller;
 
-import com.ticket.tracking.entity.Ticket;
-import com.ticket.tracking.entity.TicketRequest;
-import com.ticket.tracking.entity.TicketResponse;
+import com.ticket.tracking.entity.ticket.TicketRequest;
+import com.ticket.tracking.entity.ticket.TicketResponse;
 import com.ticket.tracking.parameter.TicketQueryParameter;
 import com.ticket.tracking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
