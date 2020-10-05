@@ -11,6 +11,12 @@
 <div layout:fragment="content">
     <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
     <h2>This is your Admin Dashboard</h2>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Sign Out">
+    </form>
+    <form class="form-signin" th:action="@{/signup}" method="get">
+        <button class="btn btn-md btn-success btn-block" type="Submit">Add New User</button>
+    </form>
 </div>
 </body>
 </html>
