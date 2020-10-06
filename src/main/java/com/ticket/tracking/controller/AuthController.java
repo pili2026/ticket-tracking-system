@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -60,6 +61,19 @@ public class AuthController {
         modelAndView.addObject("fullName", "Welcome " + user.getFullName());
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("dashboard");
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/rd_dashboard")
+    @ResponseBody
+    public ModelAndView rdDashboard() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = loginUserService.findUserByEmail(auth.getName());
+        modelAndView.addObject("currentUser", user);
+        modelAndView.addObject("fullName", "Welcome " + user.getFullName());
+        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        modelAndView.setViewName("rd_dashboard");
         return modelAndView;
     }
 

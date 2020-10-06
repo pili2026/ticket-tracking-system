@@ -26,12 +26,27 @@ public class Application {
                 roleRepository.save(newAdminRole);
             }
 
-            Role userRole = roleRepository.findByRole("USER");
-            if (userRole == null) {
+            Role pmRole = roleRepository.findByRole("PM");
+            if (pmRole == null) {
                 Role newUserRole = new Role();
-                newUserRole.setRole("USER");
+                newUserRole.setRole("PM");
                 roleRepository.save(newUserRole);
             }
+
+            Role qarRole = roleRepository.findByRole("QA");
+            if (qarRole == null) {
+                Role newUserRole = new Role();
+                newUserRole.setRole("QA");
+                roleRepository.save(newUserRole);
+            }
+
+            Role rdRole = roleRepository.findByRole("RD");
+            if (rdRole == null) {
+                Role newUserRole = new Role();
+                newUserRole.setRole("RD");
+                roleRepository.save(newUserRole);
+            }
+
         };
 
     }
