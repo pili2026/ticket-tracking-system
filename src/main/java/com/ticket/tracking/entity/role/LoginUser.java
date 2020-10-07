@@ -18,6 +18,7 @@ public class LoginUser {
     private String password;
     private String fullName;
     private boolean enabled;
+    private String userPosition;
     @DBRef
     private Set<Role> roles;
 
@@ -51,6 +52,14 @@ public class LoginUser {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getUserPosition() {
+        return userPosition;
+    }
+
+    public void setUserPosition(String userPosition) {
+        this.userPosition = userPosition;
     }
 
     public boolean isEnabled() {
