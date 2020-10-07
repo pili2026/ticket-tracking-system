@@ -1,11 +1,17 @@
 package com.ticket.tracking;
 
+import com.ticket.tracking.entity.role.LoginUser;
 import com.ticket.tracking.entity.role.Role;
+import com.ticket.tracking.repository.LoginUserRepository;
 import com.ticket.tracking.repository.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import java.util.Collections;
+import java.util.HashSet;
 
 @SpringBootApplication
 public class Application {
@@ -15,7 +21,7 @@ public class Application {
     }
 
     @Bean
-    CommandLineRunner init(RoleRepository roleRepository) {
+    CommandLineRunner init(RoleRepository roleRepository, LoginUserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
 
         return args -> {
 
@@ -24,6 +30,14 @@ public class Application {
                 Role newAdminRole = new Role();
                 newAdminRole.setRole("ADMIN");
                 roleRepository.save(newAdminRole);
+
+                LoginUser user = new LoginUser();
+                user.setEmail("admin@gmail.com");
+                user.setPassword(bCryptPasswordEncoder.encode("s123"));
+                user.setEnabled(true);
+                Role userRole = roleRepository.findByRole("ADMIN");
+                user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+                userRepository.save(user);
             }
 
             Role pmRole = roleRepository.findByRole("PM");

@@ -18,7 +18,7 @@ public class LoginUser {
     private String password;
     private String fullName;
     private boolean enabled;
-    private String userPosition;
+    private String userRole;
     @DBRef
     private Set<Role> roles;
 
@@ -54,12 +54,12 @@ public class LoginUser {
         this.fullName = fullName;
     }
 
-    public String getUserPosition() {
-        return userPosition;
+    public String getUserRole() {
+        return userRole;
     }
 
-    public void setUserPosition(String userPosition) {
-        this.userPosition = userPosition;
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public boolean isEnabled() {

@@ -23,8 +23,14 @@
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
         <label for="inputFullName" class="sr-only">Full Name</label>
         <input type="text" name="FullName" id="inputFullName" class="form-control" placeholder="FullName" required="" />
-        <label for="inputPosition" class="sr-only">User Position</label>
-        <input type="text" name="UserPosition" id="inputPosition" class="form-control" placeholder="UserPosition" required="" />
+        <select name="UserRole">
+            <option value="">Add user role</option>
+            <option value="ADMIN">ADMIN</option>
+            <option value="PM">PM</option>
+            <option value="QA">QA</option>
+            <option value="RD">RD</option>
+        </select>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
     </form>
 </div>

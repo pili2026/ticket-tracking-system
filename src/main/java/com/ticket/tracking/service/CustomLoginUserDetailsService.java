@@ -42,7 +42,7 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setFullName(user.getFullName());
-        Role userRole = roleRepository.findByRole(user.getUserPosition());
+        Role userRole = roleRepository.findByRole(user.getUserRole());
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         userRepository.save(user);
     }
