@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
+<head>
+    <title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+    .divider-text {
+    position: relative;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+	}
+	.divider-text span {
+		padding: 7px;
+		font-size: 12px;
+		position: relative;
+		z-index: 2;
+	}
+	.divider-text:after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		border-bottom: 1px solid #ddd;
+		top: 55%;
+		left: 0;
+		z-index: 1;
+	}
+  </style>
+</head>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+    <br>  <p class="text-center">Add New User Here</p>
+    <hr>
+
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2">Invalid email and password.<br>You have been logged out.</h4>
+                </header>
+                <article class="card-body">
+                    <form class="form-signin" th:action="@{/add_user}" method="post">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <label for="inputEmail" class="sr-only">Email</label>
+                            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" />
+                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-row">
+                            <label>Password</label>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label>Full Name</label>
+                                <label for="inputFullName" class="sr-only">Full Name</label>
+                                <input type="text" name="FullName" id="inputFullName" class="form-control" placeholder="FullName" required="" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Role</label>
+                                <select name="UserRole" class="form-control">
+                                    <option value="">Add user role</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="PM">PM</option>
+                                    <option value="QA">QA</option>
+                                    <option value="RD">RD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                        </div>
+
+                    </form>
+                </article>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+

@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
 <head>
     <title>Login</title>
     <meta charset="utf-8">
@@ -38,7 +42,13 @@
                 <li class="active"><a href="#">Home</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li>
+                    <a href="#">
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

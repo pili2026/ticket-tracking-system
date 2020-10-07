@@ -23,16 +23,16 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/signup")
-    public ModelAndView signup() {
+    @GetMapping(value = "/add_user")
+    public ModelAndView addUser() {
         ModelAndView modelAndView = new ModelAndView();
         LoginUser user = new LoginUser();
         modelAndView.addObject("user", user);
-        modelAndView.setViewName("signup");
+        modelAndView.setViewName("add_user");
         return modelAndView;
     }
 
-    @PostMapping(value = "/signup")
+    @PostMapping(value = "/add_user")
     public ModelAndView createNewUser(LoginUser user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         LoginUser userExists = loginUserService.findUserByEmail(user.getEmail());
@@ -41,7 +41,7 @@ public class AuthController {
                             "There is already a user registered with the username provided");
         }
         if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("signup");
+            modelAndView.setViewName("add_user");
         } else {
             loginUserService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");

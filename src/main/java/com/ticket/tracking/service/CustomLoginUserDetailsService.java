@@ -30,13 +30,6 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-//    public void saveUser(LoginUser user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setEnabled(true);
-//        Role userRole = roleRepository.findByRole("ADMIN");
-//        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
-//        userRepository.save(user);
-//    }
 
     public void saveUser(LoginUser user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
