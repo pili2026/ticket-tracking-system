@@ -64,18 +64,6 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/rd_dashboard")
-    @ResponseBody
-    public ModelAndView rdDashboard() {
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser user = loginUserService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("fullName", "Welcome " + user.getFullName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
-        modelAndView.setViewName("rd_dashboard");
-        return modelAndView;
-    }
 
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {

@@ -1,10 +1,15 @@
 package com.ticket.tracking.service;
 
+import com.ticket.tracking.convert.TicketConverter;
 import com.ticket.tracking.entity.FeatureType;
 import com.ticket.tracking.repository.FeatureTypeRepository;
 import com.ticket.tracking.repository.TickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FeatureService {
@@ -26,6 +31,11 @@ public class FeatureService {
         featureType.setReporter("Jimmy");
         repository.save(featureType);
 
+    }
+
+    public List<FeatureType> findFeatureTicket() {
+        List<FeatureType> featureTypes = repository.findAll();
+        return new ArrayList<>(featureTypes);
     }
 
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -5,7 +6,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="default">
 <head>
-  <title>Login</title>
+  <title>Ticket list</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -44,37 +45,37 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">
           <form th:action="@{/logout}" method="post">
-          <input type="submit" value="Logout">
-        </form>
+            <input class="btn btn-outline-secondary" type="submit" value="Logout" style="background: black">
+          </form>
         </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<div class="row">
-  <label><h3>Ticket Tracing List</h3></label>
-  <div class="col-md-12 bg-light text-right" >
-    <form class="form-group" th:action="@{/feature}" method="post">
-      <button type="Submit" class="btn btn-success">Create ticket</button>
-    </form>
-  </div>
-</div>
-<div class="table-responsive">
-  <table id="mytable" class="table table-bordred table-striped">
-    <thead>
-    <th><input type="checkbox" id="checkall" /></th>
-    <th>#</th>
-    <th>追蹤標籤</th>
-    <th>狀態</th>
-    <th>優先權</th>
-    <th>主旨</th>
-    <th>分派給</th>
-    <th>更新日期</th>
-    <th>編輯</th>
-    <th>刪除</th>
-    </thead>
-  </table>
+<div class="content">
+	<h3>Ticket Tracing List</h3>
+	<div class="col-md-12 bg-light text-right" >
+    <!--    th:action -> url    -->
+	<form class="form-group" th:action="@{/pm_dashboard/create}" method="get">
+	  <button type="Submit" class="btn btn-success" >Create ticket</button>
+	</form>
+	</div>
+	  <table id="mytable" class="table table-bordred table-striped">
+		<thead>
+		<th><input type="checkbox" id="checkall" /></th>
+		<th>#</th>
+		<th>追蹤標籤</th>
+		<th>狀態</th>
+		<th>優先權</th>
+		<th>主旨</th>
+		<th>分派給</th>
+		<th>更新日期</th>
+		<th>編輯</th>
+		<th>刪除</th>
+		</thead>
+	  </table>
+	
 </div>
 </body>
 </html>

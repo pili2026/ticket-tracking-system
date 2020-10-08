@@ -23,6 +23,7 @@ public class PageConfig implements WebMvcConfigurer {
         registry.addViewController("/pm_dashboard").setViewName("pm_dashboard");
         registry.addViewController("/qa_dashboard").setViewName("qa_dashboard");
         registry.addViewController("/rd_dashboard").setViewName("rd_dashboard");
+        registry.addViewController("/pm_dashboard/create").setViewName("create");
     }
 
 }
