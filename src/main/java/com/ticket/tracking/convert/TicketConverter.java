@@ -28,19 +28,19 @@ public class TicketConverter {
 
     public static Ticket toTicket(TicketRequest request) {
         Ticket ticket = ticketObj(request);
-
-        if (ticket.getTicketType().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket type");
-        }
-        if (ticket.getPriority().equals("invalid")) {
-            throw new InvalidValueException("Invalid priority");
-        }
-        if (ticket.getSeverity().equals("invalid")) {
-            throw new InvalidValueException("Invalid severity");
-        }
-        if (ticket.getTicketStatus().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket status");
-        }
+//
+//        if (ticket.getTicketType().equals("invalid")) {
+//            throw new InvalidValueException("Invalid ticket type");
+//        }
+//        if (ticket.getPriority().equals("invalid")) {
+//            throw new InvalidValueException("Invalid priority");
+//        }
+//        if (ticket.getSeverity().equals("invalid")) {
+//            throw new InvalidValueException("Invalid severity");
+//        }
+//        if (ticket.getTicketStatus().equals("invalid")) {
+//            throw new InvalidValueException("Invalid ticket status");
+//        }
 
         return ticket;
 

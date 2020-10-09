@@ -1,15 +1,15 @@
 package com.ticket.tracking.service;
 
-import com.ticket.tracking.convert.TicketConverter;
 import com.ticket.tracking.entity.FeatureType;
+import com.ticket.tracking.entity.ticket.Ticket;
 import com.ticket.tracking.repository.FeatureTypeRepository;
 import com.ticket.tracking.repository.TickRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FeatureService {
@@ -17,17 +17,20 @@ public class FeatureService {
     @Autowired
     private FeatureTypeRepository repository;
 
+    @Autowired
+    private TickRepository tickRepository;
+
     public void createFeatureTicket(FeatureType featureType) {
-        featureType.setSummary("Firewall");
-        featureType.setDescription("New Feature");
-        featureType.setPriority("High");
-        featureType.setSeverity("Critical");
-        featureType.setTicketStatus("New");
+        Instant instant = Instant.now();
+        long timeStampMillis = instant.toEpochMilli();
+        featureType.setSummary(featureType.getSummary());
+        featureType.setDescription(featureType.getDescription());
+        featureType.setPriority(featureType.getPriority());
+        featureType.setSeverity(featureType.getSeverity());
+        featureType.setTicketStatus(featureType.getTicketStatus());
         featureType.setTicketType("Feature");
-        featureType.setCreateDate(1602088142);
-        featureType.setExpectedDate(1602088142);
-        featureType.setResolveDate(1602088142);
-        featureType.setAssignee("Jeremy");
+        featureType.setCreateDate(timeStampMillis);
+        featureType.setAssignee(featureType.getAssignee());
         featureType.setReporter("Jimmy");
         repository.save(featureType);
 

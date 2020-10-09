@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -55,18 +56,18 @@ public class TicketService {
 
     public TicketResponse createTicket(TicketRequest request) {
         Ticket ticket = ticketObj(request);
-        if (ticket.getTicketType().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket type");
-        }
-        if (ticket.getPriority().equals("invalid")) {
-            throw new InvalidValueException("Invalid priority");
-        }
-        if (ticket.getSeverity().equals("invalid")) {
-            throw new InvalidValueException("Invalid severity");
-        }
-        if (ticket.getTicketStatus().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket status");
-        }
+//        if (ticket.getTicketType().equals("invalid")) {
+//            throw new InvalidValueException("Invalid ticket type");
+//        }
+//        if (ticket.getPriority().equals("invalid")) {
+//            throw new InvalidValueException("Invalid priority");
+//        }
+//        if (ticket.getSeverity().equals("invalid")) {
+//            throw new InvalidValueException("Invalid severity");
+//        }
+//        if (ticket.getTicketStatus().equals("invalid")) {
+//            throw new InvalidValueException("Invalid ticket status");
+//        }
         repository.insert(ticket);
 
         return TicketConverter.toTicketResponse(ticket);
@@ -186,5 +187,10 @@ public class TicketService {
         ticket.setReporter(request.getReporter());
 
         return ticket;
+    }
+
+    private long currentEpoch() {
+        Instant instant = Instant.now();
+        return instant.toEpochMilli();
     }
 }

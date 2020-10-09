@@ -61,21 +61,45 @@
 	  <button type="Submit" class="btn btn-success" >Create ticket</button>
 	</form>
 	</div>
-	  <table id="mytable" class="table table-bordred table-striped">
-		<thead>
-		<th><input type="checkbox" id="checkall" /></th>
-		<th>#</th>
-		<th>追蹤標籤</th>
-		<th>狀態</th>
-		<th>優先權</th>
-		<th>主旨</th>
-		<th>分派給</th>
-		<th>更新日期</th>
-		<th>編輯</th>
-		<th>刪除</th>
-		</thead>
-	  </table>
-	
+
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="thread-dark">
+      <tr>
+        <th>No.</th>
+        <th>Id</th>
+        <th>Summary</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Severity</th>
+        <th>Status</th>
+        <th>Type</th>
+        <th>Reporter</th>
+        <th>Assignee</th>
+        <th>CreateDate</th>
+        <th>ResolveDate</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr th:each="ticket, iterStat: ${tickets}" >
+        <td th:text="${iterStat.count}" th:class="${iterStat.even == true ? 'text-primary' : 'text-success'}">No.</td>
+        <td th:text="${ticket.id}">Id</td>
+        <td th:text="${ticket.summary}">Summary</td>
+        <td th:text="${ticket.description}">Description</td>
+        <td th:text="${ticket.priority}">Priority</td>
+        <td th:text="${ticket.severity}">Severity</td>
+        <td th:text="${ticket.ticketStatus}">Status</td>
+        <td th:text="${ticket.ticketType}">Type</td>
+        <td th:text="${ticket.reporter}">Reporter</td>
+        <td th:text="${ticket.assignee}">Assignee</td>
+        <td th:text="${ticket.createDate}">CreateDate</td>
+        <td th:text="${ticket.resolveDate}">ResolveDate</td>
+      </tr>
+    </tbody>
+  </table>
+
+
 </div>
 </body>
 </html>

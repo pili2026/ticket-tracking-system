@@ -12,9 +12,9 @@ public class FeatureType {
     private String ticketType;
     private String priority;
     private String severity;
-    private int createDate;
-    private int expectedDate;
-    private int resolveDate;
+    private long createDate;
+    private long expectedDate;
+    private long resolveDate;
     private String reporter;
     private String assignee;
 
@@ -52,15 +52,7 @@ public class FeatureType {
     }
 
     public void setTicketStatus(String ticketStatus) {
-        String[] targetTypeArray = {"New", "Start", "Close", "Resolve", "Verify"};
-        for (String s: targetTypeArray) {
-            if (s.equals(ticketStatus)) {
-                this.ticketStatus = ticketStatus;
-            } else {
-                this.ticketStatus = "invalid";
-            }
-            break;
-        }
+        this.ticketStatus = ticketStatus;
     }
 
     public String getTicketType() {
@@ -68,15 +60,7 @@ public class FeatureType {
     }
 
     public void setTicketType(String ticketType) {
-        String[] targetTypeArray = {"Bug", "Feature", "TestCase"};
-        for (String s: targetTypeArray) {
-            if (s.equals(ticketType)) {
-                this.ticketType = ticketType;
-                break;
-            } else {
-                this.ticketType = "invalid";
-            }
-        }
+        this.ticketType = ticketType;
     }
 
     public String getPriority() {
@@ -84,17 +68,7 @@ public class FeatureType {
     }
 
     public void setPriority(String priority) {
-        String[] targetTypeArray = {"High", "Medium", "Low"};
-        for (String s: targetTypeArray) {
-            if (s.equals(priority)) {
-                this.priority = priority;
-                break;
-            } else {
-                this.priority = "invalid";
-            }
-            break;
-        }
-
+        this.priority = priority;
     }
 
     public String getSeverity() {
@@ -102,38 +76,30 @@ public class FeatureType {
     }
 
     public void setSeverity(String severity) {
-        String[] targetTypeArray = {"Critical", "Major", "Moderate", "Minor", "Cosmetic"};
-        for (String s: targetTypeArray) {
-            if (s.equals(severity)) {
-                this.severity = severity;
-            } else {
-                this.severity = "invalid";
-            }
-            break;
-        }
+        this.severity = severity;
     }
 
-    public int getCreateDate() {
+    public long getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(int createDate) {
+    public void setCreateDate(long createDate) {
         this.createDate = createDate;
     }
 
-    public int getExpectedDate() {
+    public long getExpectedDate() {
         return expectedDate;
     }
 
-    public void setExpectedDate(int expectedDate) {
+    public void setExpectedDate(long expectedDate) {
         this.expectedDate = expectedDate;
     }
 
-    public int getResolveDate() {
+    public long getResolveDate() {
         return resolveDate;
     }
 
-    public void setResolveDate(int resolveDate) {
+    public void setResolveDate(long resolveDate) {
         this.resolveDate = resolveDate;
     }
 
