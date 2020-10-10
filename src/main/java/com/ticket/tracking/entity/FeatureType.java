@@ -13,8 +13,7 @@ public class FeatureType {
     private String priority;
     private String severity;
     private long createDate;
-    private long expectedDate;
-    private long resolveDate;
+    private long updatedDate;
     private String reporter;
     private String assignee;
 
@@ -87,20 +86,12 @@ public class FeatureType {
         this.createDate = createDate;
     }
 
-    public long getExpectedDate() {
-        return expectedDate;
+    public long getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setExpectedDate(long expectedDate) {
-        this.expectedDate = expectedDate;
-    }
-
-    public long getResolveDate() {
-        return resolveDate;
-    }
-
-    public void setResolveDate(long resolveDate) {
-        this.resolveDate = resolveDate;
+    public void setUpdatedDate(long updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public String getReporter() {
