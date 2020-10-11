@@ -41,18 +41,23 @@
 
 
 <div class="container">
-    <br>  <p class="text-center">Add New User Here</p>
+    <br>  <p class="text-center">Update User Here</p>
     <hr>
 
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-md-6">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title mt-2">Invalid email and password.<br>You have been logged out.</h4>
                 </header>
                 <article class="card-body">
                     <form class="form-create" th:action="@{/add_user}" th:object="${user}" method="post">
                         <input type="hidden" th:field="*{id}"/>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <label for="inputEmail" class="sr-only">Email</label>
+                            <input th:field="*{email}" type="email" name="email" id="inputEmail" class="form-control"  required="" />
+                            <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
                         <div class="form-row">
                             <label>Password</label>
                             <label for="inputPassword" class="sr-only">Password</label>

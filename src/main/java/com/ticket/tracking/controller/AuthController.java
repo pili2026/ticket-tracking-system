@@ -44,14 +44,17 @@ public class AuthController {
             bindingResult.rejectValue("email", "error.user",
                             "There is already a user registered with the username provided");
         }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("add_user");
-        } else {
-            loginUserService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", user);
-
-        }
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.setViewName("add_user");
+//        } else {
+//            loginUserService.saveUser(user);
+//            modelAndView.addObject("successMessage", "User has been registered successfully");
+//            modelAndView.addObject("user", new LoginUser());
+//
+//        }
+        loginUserService.saveUser(user);
+        modelAndView.addObject("successMessage", "User has been registered successfully");
+        modelAndView.addObject("user", new LoginUser());
         return modelAndView;
     }
 
@@ -67,7 +70,6 @@ public class AuthController {
     @GetMapping(value = "/dashboard")
     public ModelAndView dashboard() {
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<LoginUser> users = loginUserService.findUsers();
         modelAndView.addObject("users", users);
         modelAndView.setViewName("dashboard");

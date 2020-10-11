@@ -44,6 +44,7 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
 
 
     public void saveUser(LoginUser user) {
+        user.setEmail(user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setFullName(user.getFullName());
