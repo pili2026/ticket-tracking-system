@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +27,9 @@ public class FeatureService {
         // epoch
         Instant instant = Instant.now();
         long timeStampMillis = instant.toEpochMilli();
+        LocalDate ld = Instant.ofEpochMilli(timeStampMillis)
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+
         System.out.println(featureType.getTicketStatus());
         featureType.setSummary(featureType.getSummary());
         featureType.setDescription(featureType.getDescription());
@@ -32,15 +37,16 @@ public class FeatureService {
         featureType.setSeverity(featureType.getSeverity());
         featureType.setTicketStatus(featureType.getTicketStatus());
         featureType.setTicketType("Feature");
-        featureType.setCreateDate(timeStampMillis);
+        featureType.setCreateDate(ld.toString());
+        featureType.setUpdatedDate(ld.toString());
         featureType.setAssignee(featureType.getAssignee());
         featureType.setReporter(name);
         repository.save(featureType);
 
     }
 
-    public List<FeatureType> findFeatureTickets() {
-        List<FeatureType> featureTypes = repository.findAll();
+    public List<FeatureType> getFeatureTickets() {
+        List<FeatureType> featureTypes = repository.findByTicketTypeLikeIgnoreCase("Feature");
         return new ArrayList<>(featureTypes);
     }
 
@@ -64,13 +70,13 @@ public class FeatureService {
         return feature;
     }
 
-    public void replaceTicketTypeById(String type, String id, FeatureType featureType) {
+    public void replaceTicketTypeById(FeatureType featureType,String name) {
         Instant instant = Instant.now();
         long timeStampMillis = instant.toEpochMilli();
-        FeatureType oldTicket = repository.findByTicketTypeByIdLikeIgnoreCase(type, id);
-        System.out.println(featureType.getSeverity());
+        LocalDate ld = Instant.ofEpochMilli(timeStampMillis)
+                .atZone(ZoneId.systemDefault()).toLocalDate();
         FeatureType newTicket = new FeatureType();
-        newTicket.setId(oldTicket.getId());
+
         newTicket.setSummary(featureType.getSummary());
         newTicket.setDescription(featureType.getDescription());
         newTicket.setPriority(featureType.getPriority());
@@ -79,8 +85,9 @@ public class FeatureService {
         newTicket.setTicketType("Feature");
         newTicket.setCreateDate(featureType.getCreateDate());
         newTicket.setAssignee(featureType.getAssignee());
-        newTicket.setReporter(oldTicket.getReporter());
-        newTicket.setUpdatedDate(timeStampMillis);
+        newTicket.setReporter(name);
+        newTicket.setCreateDate(featureType.getCreateDate());
+        newTicket.setUpdatedDate(ld.toString());
         repository.save(newTicket);
 
     }
