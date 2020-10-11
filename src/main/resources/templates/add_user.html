@@ -41,14 +41,13 @@
 
 
 <div class="container">
-    <br>  <p class="text-center">Add New User Here</p>
+    <br>  <h3 class="text-center">Add New User Here</h3>
     <hr>
-
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-md-6">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title mt-2">Invalid email and password.<br>You have been logged out.</h4>
+                    <h4 class="card-title mt-2"></h4>
                 </header>
                 <article class="card-body">
                     <form class="form-signin" th:action="@{/add_user}" method="post">
@@ -83,15 +82,13 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
                         </div>
-
                     </form>
+                    <hr>
+                    <a th:href="@{/dashboard}" class="btn btn-success btn-block"> Back to Dashboard</a>
                 </article>
             </div>
         </div>
-
     </div>
-
-
 </div>
 
 

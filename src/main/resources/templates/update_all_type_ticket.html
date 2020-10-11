@@ -92,6 +92,8 @@
                                         <option th:unless="${ticket.priority == 'Low'}" th:text="Low"></option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Severity</label>
                                     <select name="severity" class="form-control" th:each="ticket: ${tickets}">
@@ -103,8 +105,6 @@
                                         <option th:unless="${ticket.severity == 'Cosmetic'}" th:text="Cosmetic"></option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="form-group col-md-3">
                                     <label class="control-label">Assignee</label>
                                     <select name="assignee" class="form-control">
@@ -120,7 +120,7 @@
                 </div>
             </form>
             <hr>
-            <a th:href="@{/dashboard}" class="btn btn-primary btn-sm mb-3"> Back to Feature Ticket List</a>
+            <a th:href="@{/dashboard}" class="btn btn-primary btn-sm mb-3"> Back Dashboard</a>
         </article>
     </div>
 </div>
