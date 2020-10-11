@@ -3,12 +3,21 @@ package com.ticket.tracking.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.ticket.tracking.entity.BugType;
+import com.ticket.tracking.entity.FeatureType;
+import com.ticket.tracking.entity.TestCaseType;
 import com.ticket.tracking.entity.role.LoginUser;
+import com.ticket.tracking.entity.ticket.Ticket;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
+import com.ticket.tracking.service.FeatureService;
+import com.ticket.tracking.service.QaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,6 +28,12 @@ import java.util.List;
 public class AuthController {
     @Autowired
     private CustomLoginUserDetailsService loginUserService;
+
+    @Autowired
+    private QaTypeService qaTypeService;
+
+    @Autowired
+    private FeatureService featureService;
 
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -70,7 +85,13 @@ public class AuthController {
     public ModelAndView dashboard() throws JsonProcessingException {
         ModelAndView modelAndView = new ModelAndView();
         List<LoginUser> users = loginUserService.findUsers();
+        List<BugType> bugTypes = qaTypeService.getBugTypeTickets();
+        List<TestCaseType> testCaseTypes = qaTypeService.getTestCaseTypeTickets();
+        List<FeatureType> featureTypes = featureService.getFeatureTickets();
         modelAndView.addObject("users", users);
+        modelAndView.addObject("testCaseTypes", testCaseTypes);
+        modelAndView.addObject("bugTypes", bugTypes);
+        modelAndView.addObject("tickets", featureTypes);
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
@@ -79,7 +100,7 @@ public class AuthController {
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("login");
         return modelAndView;
     }
 
@@ -104,5 +125,50 @@ public class AuthController {
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
         return gsonPretty.toJson(loginUser);
 
+    }
+
+    /* ticket */
+    @GetMapping("/create_all_type_ticket")
+    public ModelAndView createAllTypeTicket() {
+        ModelAndView modelAndView = new ModelAndView("create_all");
+        List<LoginUser> users = loginUserService.findRDUsers();
+        // return DB name to html
+        modelAndView.addObject("users", users);
+        /*
+        setViewName -> {name}.html, file name
+         */
+
+        return modelAndView;
+    }
+
+    @PostMapping("/save_all_type_ticket")
+    public ModelAndView saveAllTypeTicket(@ModelAttribute("tickets") BugType bugType) {
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = loginUserService.findUserByEmail(auth.getName());
+        qaTypeService.createBugTicket(bugType, user.getFullName());
+        modelAndView.addObject("tickets", bugType);
+        return modelAndView;
+    }
+
+    @GetMapping("/update_all_type_ticket/{id}")
+    public ModelAndView updateAllTypeTicket(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("update_all_type_ticket");
+        BugType bugType = qaTypeService.getBugTicket(id);
+        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        List<LoginUser> users = loginUserService.findRDUsers();
+        FeatureType featureType = featureService.getFeatureTicket(id);
+        modelAndView.addObject("tickets", featureType);
+
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
+    @GetMapping("/delete_all_type_ticket/{id}")
+    public ModelAndView deleteAllTypeTicket(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        featureService.deleteTicket(id);
+        return modelAndView;
     }
 }

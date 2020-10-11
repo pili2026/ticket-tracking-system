@@ -70,6 +70,9 @@
                                     <option value="Low">Low</option>
                                 </select>
                             </div>
+
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-3">
                                 <label class="control-label">Severity</label>
                                 <select name="severity" class="form-control">
@@ -80,15 +83,11 @@
                                     <option value="Cosmetic">Cosmetic</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-lg-12">
-                                <div class="form-group col-md-3">
-                                    <label class="control-label">Assignee</label>
-                                    <select name="assignee" class="form-control">
-                                        <option th:each="user: ${users}" th:text="${user.fullName}"></option>
-                                    </select>
-                                </div>
+                            <div class="form-group col-md-3">
+                                <label class="control-label">Assignee</label>
+                                <select name="assignee" class="form-control">
+                                    <option th:each="user: ${users}" th:text="${user.fullName}"></option>
+                                </select>
                             </div>
                         </div>
                     </div>
