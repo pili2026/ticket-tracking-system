@@ -76,11 +76,7 @@
                                     <label class="control-label">Status</label>
                                     <select name="ticketStatus" class="form-control" th:each="ticket: ${testCaseType}">
                                         <option th:text="${ticket.ticketStatus}"></option>
-                                        <!--                                <option th:unless="${ticket.ticketStatus == 'New'}" th:text="New"></option>-->
-                                        <!--                                <option th:unless="${ticket.ticketStatus == 'Start'}" th:text="Start"></option>-->
-                                        <!--                                <option th:unless="${ticket.ticketStatus == 'Resolve'}" th:text="Resolve"></option>-->
                                         <option th:unless="${ticket.ticketStatus == 'Close'}" th:text="Close"></option>
-                                        <!--                                <option th:unless="${ticket.ticketStatus == 'Verify'}" th:text="Verify"></option>-->
                                     </select>
                                 </div>
                                 <div class="form-group col-md-3">
@@ -114,9 +110,9 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-save"></i> Update</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-lg"><i class="fa fa-save"></i> Update</button>
+                            </div>
                         </div>
                     </div>
                 </div>

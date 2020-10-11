@@ -3,6 +3,7 @@ package com.ticket.tracking.service;
 import com.ticket.tracking.entity.BugType;
 import com.ticket.tracking.entity.FeatureType;
 import com.ticket.tracking.entity.TestCaseType;
+import com.ticket.tracking.function.TimeFunc;
 import com.ticket.tracking.repository.BugTypeRepository;
 import com.ticket.tracking.repository.TestCaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +61,7 @@ public class QaTypeService {
 
     public void createBugTicket(BugType bugType, String name) {
         // epoch
-        Instant instant = Instant.now();
-        long timeStampMillis = instant.toEpochMilli();
-        LocalDate ld = Instant.ofEpochMilli(timeStampMillis)
-                .atZone(ZoneId.systemDefault()).toLocalDate();
+        TimeFunc timeFunc = new TimeFunc();
 
         bugType.setSummary(bugType.getSummary());
         bugType.setDescription(bugType.getDescription());
@@ -71,9 +69,27 @@ public class QaTypeService {
         bugType.setSeverity(bugType.getSeverity());
         bugType.setTicketStatus(bugType.getTicketStatus());
         bugType.setTicketType(bugType.getTicketType());
-        bugType.setCreateDate(ld.toString());
-        bugType.setUpdatedDate(ld.toString());
+        bugType.setCreateDate(timeFunc.localDateTime());
+        bugType.setUpdatedDate(timeFunc.localDateTime());
         bugType.setAssignee(bugType.getAssignee());
+        bugType.setReporter(name);
+        bugTypeRepository.save(bugType);
+
+    }
+
+    public void updateBugTicket(BugType bugType, String name) {
+        TimeFunc timeFunc = new TimeFunc();
+        BugType oldBug = bugTypeRepository.findByTicketTypeByIdLikeIgnoreCase(bugType.getTicketType(), bugType.getId());
+        bugType.setSummary(bugType.getSummary());
+        bugType.setDescription(bugType.getDescription());
+        bugType.setPriority(oldBug.getPriority());
+        bugType.setSeverity(oldBug.getSeverity());
+        bugType.setTicketStatus(bugType.getTicketStatus());
+        bugType.setTicketType(oldBug.getTicketType());
+        bugType.setCreateDate(oldBug.getCreateDate());
+        bugType.setUpdatedDate(timeFunc.localDateTime());
+        bugType.setReporter(oldBug.getReporter());
+        bugType.setAssignee(oldBug.getAssignee());
         bugType.setReporter(name);
         bugTypeRepository.save(bugType);
 

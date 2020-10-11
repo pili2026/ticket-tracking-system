@@ -44,13 +44,24 @@ public class RdViewController {
     }
 
     @PostMapping("/savaBugTicket")
-    public ModelAndView createQaTicket(@ModelAttribute("tickets") BugType bugType) {
+    public ModelAndView saveBugTicket(@ModelAttribute("tickets") BugType bugType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        qaTypeService.createBugTicket(bugType, user.getFullName());
+        qaTypeService.updateBugTicket(bugType, user.getFullName());
         modelAndView.addObject("tickets", bugType);
+        return modelAndView;
+    }
+
+    @PostMapping("/savaFeatureTicket")
+    public ModelAndView saveFeatureTicket(@ModelAttribute("tickets") FeatureType featureType) {
+
+        ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
+        featureService.updateFeatureTicket(featureType);
+        modelAndView.addObject("tickets", featureType);
         return modelAndView;
     }
 
@@ -61,6 +72,17 @@ public class RdViewController {
         BugType bugType = qaTypeService.getBugTicket(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
         modelAndView.addObject("bugType", bugType);
+        modelAndView.addObject("users", users);
+        return modelAndView;
+    }
+
+    @GetMapping("/updateFeatureTicket/{id}")
+    public ModelAndView updateTicket(@PathVariable("id") String id) {
+        System.out.println("updateTicketView");
+        ModelAndView modelAndView = new ModelAndView("update_feature_ticket");
+        FeatureType featureType = featureService.getFeatureTicket(id);
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+        modelAndView.addObject("featureType", featureType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
