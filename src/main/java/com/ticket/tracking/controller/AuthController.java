@@ -167,8 +167,8 @@ public class AuthController {
     public ModelAndView jsonAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_page");
         List<LoginUser> users = loginUserService.findRDUsers();
-        TicketType featureType = ticketTypeService.getTicketById(id);
-        modelAndView.addObject("tickets", featureType);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
+        modelAndView.addObject("tickets", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
