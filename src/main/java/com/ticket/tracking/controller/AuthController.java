@@ -1,20 +1,19 @@
 package com.ticket.tracking.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ticket.tracking.entity.role.LoginUser;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class AuthController {
@@ -68,7 +67,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/dashboard")
-    public ModelAndView dashboard() {
+    public ModelAndView dashboard() throws JsonProcessingException {
         ModelAndView modelAndView = new ModelAndView();
         List<LoginUser> users = loginUserService.findUsers();
         modelAndView.addObject("users", users);
@@ -89,5 +88,21 @@ public class AuthController {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         loginUserService.deleteUser(id);
         return modelAndView;
+    }
+
+    @GetMapping("/to_json_user/{id}")
+    public ModelAndView toJsonUser(@PathVariable("id") String id, LoginUser user) {
+        ModelAndView modelAndView = new ModelAndView("json_page");
+        LoginUser userExists = loginUserService.findUserById(id);
+        String jsonFormat = jsonTest(userExists);
+        modelAndView.addObject("successMessage", "User has been registered successfully");
+        modelAndView.addObject("json", jsonFormat);
+        return modelAndView;
+    }
+
+    private String jsonTest(LoginUser loginUser) {
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        return gsonPretty.toJson(loginUser);
+
     }
 }

@@ -1,5 +1,7 @@
 package com.ticket.tracking.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ticket.tracking.entity.BugType;
 import com.ticket.tracking.entity.TestCaseType;
 import com.ticket.tracking.entity.role.LoginUser;
@@ -79,6 +81,21 @@ public class QaViewController {
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
         qaTypeService.deleteTicket(id);
+        return modelAndView;
+    }
+
+    @GetMapping("/to_json_ticket/{id}")
+    public ModelAndView toJsonTicket(@PathVariable("id") String id, LoginUser user) {
+        ModelAndView modelAndView = new ModelAndView("json_ticket_page");
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        BugType bugType = qaTypeService.getBugTicket(id);
+        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+
+        modelAndView.addObject("testCaseType", gsonPretty.toJson(testCaseType));
+        modelAndView.addObject("bugType", gsonPretty.toJson(bugType));
+        modelAndView.addObject("users", users);
+
         return modelAndView;
     }
 

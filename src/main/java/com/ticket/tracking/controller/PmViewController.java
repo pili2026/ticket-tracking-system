@@ -1,6 +1,10 @@
 package com.ticket.tracking.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.ticket.tracking.entity.BugType;
 import com.ticket.tracking.entity.FeatureType;
+import com.ticket.tracking.entity.TestCaseType;
 import com.ticket.tracking.entity.role.LoginUser;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
 import com.ticket.tracking.service.FeatureService;
@@ -88,6 +92,18 @@ public class PmViewController {
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
         featureService.deleteTicket(id);
+        return modelAndView;
+    }
+
+    @GetMapping("/to_json_feature/{id}")
+    public ModelAndView toJsonTicket(@PathVariable("id") String id, LoginUser user) {
+        ModelAndView modelAndView = new ModelAndView("json_feature_page");
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        FeatureType featureType = featureService.getFeatureTicket(id);
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+        modelAndView.addObject("featureType", gsonPretty.toJson(featureType));
+        modelAndView.addObject("users", users);
+
         return modelAndView;
     }
 
