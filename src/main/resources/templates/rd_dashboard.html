@@ -49,10 +49,23 @@
         </div>
     </div>
 </nav>
-<div class="content">
+<div class="dashboard-item-header col-md-13 col-sm-13 col-xs-12">
     <h3>Bug Ticket List</h3>
     <table class="table table-striped table-bordered table-hover">
         <thead class="thread-dark">
+        <tr style="visibility: hidden;">
+            <td width="5px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="150px">
+        </tr>
         <tr>
             <th>No.</th>
             <th>Summary</th>
@@ -65,7 +78,7 @@
             <th>CreateDate</th>
             <th>UpdatedDate</th>
             <th>Action</th>
-            <th></th>
+
         </tr>
         </thead>
 
@@ -83,16 +96,29 @@
             <td th:text="${ticket.updatedDate}">UpdatedDate</td>
             <td>
                 <a th:href="@{/updateBugTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/to_json_rd/{id}(id=${ticket.id})}" class="btn btn-primary">Json</a>
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<div class="content">
+<div class="dashboard-item-header col-md-13 col-sm-13 col-xs-12">
     <h3>Feature Request List</h3>
-
     <table class="table table-striped table-bordered table-hover">
         <thead class="thread-dark">
+        <tr style="visibility: hidden;">
+            <td width="5px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="50px">
+            <td width="150px">
+        </tr>
         <tr>
             <th>No.</th>
             <th>Summary</th>
@@ -105,7 +131,7 @@
             <th>CreateDate</th>
             <th>UpdatedDate</th>
             <th>Action</th>
-            <th></th>
+
         </tr>
         </thead>
 
@@ -123,6 +149,7 @@
             <td th:text="${ticket.updatedDate}">UpdatedDate</td>
             <td>
                 <a th:href="@{/updateFeatureTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/to_json_rd/{id}(id=${ticket.id})}" class="btn btn-primary">Json</a>
             </td>
         </tr>
         </tbody>

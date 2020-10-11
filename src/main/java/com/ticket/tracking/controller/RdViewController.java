@@ -1,5 +1,7 @@
 package com.ticket.tracking.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ticket.tracking.entity.BugType;
 import com.ticket.tracking.entity.FeatureType;
 import com.ticket.tracking.entity.TestCaseType;
@@ -86,4 +88,21 @@ public class RdViewController {
         modelAndView.addObject("users", users);
         return modelAndView;
     }
+
+    @GetMapping("to_json_rd/{id}")
+    public ModelAndView toJsonRd(@PathVariable("id") String id, LoginUser user) {
+        ModelAndView modelAndView = new ModelAndView("json_rd_page");
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        BugType bugType = qaTypeService.getBugTicket(id);
+        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+        FeatureType featureType = featureService.getFeatureTicket(id);
+
+        modelAndView.addObject("featureType", featureType);
+        modelAndView.addObject("bugType", gsonPretty.toJson(bugType));
+        modelAndView.addObject("users", users);
+
+        return modelAndView;
+    }
+
 }

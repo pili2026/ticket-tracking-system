@@ -33,31 +33,46 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">PM</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <a class="navbar-brand" href="#" th:object="${user}" th:text="*{fullName}"></a>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">
+        <li>
           <form th:action="@{/logout}" method="post">
             <input class="btn btn-outline-secondary" type="submit" value="Logout" style="background: black">
           </form>
-        </a>
+
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <div>
+            <a th:href="@{/create}" class="btn btn-md btn-warning btn-block"> Create Feature Ticket</a>
+          </div>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<div class="content">
-	<h3>Ticket Tracing List</h3>
-	<div class="col-md-12 bg-light text-right" >
-      <a th:href="@{/create}" class="btn btn-success btn-lg"> Create Feature Ticket</a>
-	</div>
-
+<div class="dashboard-item-header col-md-13 col-sm-13 col-xs-12">
+  <h3>Feature List</h3>
   <table class="table table-striped table-bordered table-hover">
     <thead class="thread-dark">
+    <tr style="visibility: hidden;">
+      <td width="5px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="50px">
+      <td width="150px">
+    </tr>
       <tr>
         <th>No.</th>
         <th>Summary</th>
@@ -70,7 +85,6 @@
         <th>CreateDate</th>
         <th>UpdatedDate</th>
         <th>Action</th>
-        <th></th>
       </tr>
     </thead>
 
@@ -88,8 +102,8 @@
         <td th:text="${ticket.updatedDate}">UpdatedDate</td>
         <td>
           <a th:href="@{/updateTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
-          <a th:if="${ticket.ticketStatus} == 'Close'" th:href="@{/deleteTicket/{id}(id=${ticket.id})}" class="btn btn-danger">Delete</a>
           <a th:href="@{/to_json_feature/{id}(id=${ticket.id})}" class="btn btn-primary">Json</a>
+          <a th:if="${ticket.ticketStatus} == 'Close'" th:href="@{/deleteTicket/{id}(id=${ticket.id})}" class="btn btn-danger">Delete</a>
         </td>
       </tr>
     </tbody>
