@@ -51,7 +51,7 @@ public class QaViewController {
         return modelAndView;
     }
 
-    @PostMapping("/savaQaTypeTicket")
+    @PostMapping("/sava_qa_type_ticket")
     public ModelAndView createQaTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
@@ -63,7 +63,7 @@ public class QaViewController {
     }
 
 
-    @GetMapping("/updateQaTypeTicket/{id}")
+    @GetMapping("/update_qa_type_ticket/{id}")
     public ModelAndView updateQaTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_qa_ticket");
@@ -74,7 +74,7 @@ public class QaViewController {
         return modelAndView;
     }
 
-    @GetMapping("/deleteQaTicket/{id}")
+    @GetMapping("/delete_qa_ticket/{id}")
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
         ticketTypeService.deleteTicket(id);

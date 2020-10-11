@@ -39,7 +39,7 @@ public class RdViewController {
         return modelAndView;
     }
 
-    @PostMapping("/savaBugTicket")
+    @PostMapping("/sava_bug_ticket")
     public ModelAndView saveBugTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
@@ -50,7 +50,7 @@ public class RdViewController {
         return modelAndView;
     }
 
-    @PostMapping("/savaFeatureTicket")
+    @PostMapping("/sava_feature_ticket")
     public ModelAndView saveFeatureTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
@@ -61,9 +61,8 @@ public class RdViewController {
         return modelAndView;
     }
 
-    @GetMapping("/updateBugTicket/{id}")
+    @GetMapping("/update_bug_ticket/{id}")
     public ModelAndView updateBugTicket(@PathVariable("id") String id) {
-        System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_bug_ticket");
         TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
@@ -72,9 +71,8 @@ public class RdViewController {
         return modelAndView;
     }
 
-    @GetMapping("/updateFeatureTicket/{id}")
+    @GetMapping("/update_feature_ticket/{id}")
     public ModelAndView updateTicket(@PathVariable("id") String id) {
-        System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_feature_ticket");
         TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();

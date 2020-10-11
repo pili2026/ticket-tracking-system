@@ -30,7 +30,6 @@ public class PmViewController {
     @GetMapping("/pm_dashboard")
     public ModelAndView featureTickets() {
         ModelAndView modelAndView = new ModelAndView("pm_dashboard");
-        System.out.println("dashboard page");
         List<TicketType> ticketTypes = ticketTypeService.getTicketsByType("Feature");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
@@ -54,7 +53,7 @@ public class PmViewController {
     }
 
 
-    @PostMapping("/savaTicket")
+    @PostMapping("/sava_ticket")
     public ModelAndView createFeatureTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
@@ -65,9 +64,8 @@ public class PmViewController {
         return modelAndView;
     }
 
-    @GetMapping("/updateTicket/{id}")
+    @GetMapping("/update_ticket/{id}")
     public ModelAndView updateTicket(@PathVariable("id") String id) {
-        System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_ticket");
         TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
@@ -76,7 +74,7 @@ public class PmViewController {
         return modelAndView;
     }
 
-    @GetMapping("/deleteTicket/{id}")
+    @GetMapping("/delete_ticket/{id}")
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
         ticketTypeService.deleteTicket(id);

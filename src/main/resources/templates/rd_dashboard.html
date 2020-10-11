@@ -95,7 +95,7 @@
             <td th:text="${ticket.createDate}">CreateDate</td>
             <td th:text="${ticket.updatedDate}">UpdatedDate</td>
             <td>
-                <a th:href="@{/updateBugTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/update_bug_ticket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/to_json_rd/{id}(id=${ticket.id})}" class="btn btn-primary">Json</a>
             </td>
         </tr>
@@ -148,7 +148,7 @@
             <td th:text="${ticket.createDate}">CreateDate</td>
             <td th:text="${ticket.updatedDate}">UpdatedDate</td>
             <td>
-                <a th:href="@{/updateFeatureTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/update_feature_ticket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/to_json_rd/{id}(id=${ticket.id})}" class="btn btn-primary">Json</a>
             </td>
         </tr>
