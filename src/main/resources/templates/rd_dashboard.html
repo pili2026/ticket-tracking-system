@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="default">
 <head>
     <title>Login</title>
     <meta charset="utf-8">
@@ -22,7 +26,6 @@
   </style>
 </head>
 <body>
-
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -34,16 +37,96 @@
             <a class="navbar-brand" href="#">RD</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-            </ul>
+            <a class="navbar-brand" href="#" ></a>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                <li><a href="#">
+                    <form th:action="@{/logout}" method="post">
+                        <input class="btn btn-outline-secondary" type="submit" value="Logout" style="background: black">
+                    </form>
+                </a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+<div class="content">
+    <h3>Bug Ticket List</h3>
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thread-dark">
+        <tr>
+            <th>No.</th>
+            <th>Summary</th>
+            <th>Priority</th>
+            <th>Severity</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Reporter</th>
+            <th>Assignee</th>
+            <th>CreateDate</th>
+            <th>UpdatedDate</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+        </thead>
 
+        <tbody>
+        <tr th:each="ticket, iterStat: ${bugTypes}" >
+            <td th:text="${iterStat.count}" th:class="${iterStat.even == true ? 'text-primary' : 'text-success'}">No.</td>
+            <td th:text="${ticket.summary}">Summary</td>
+            <td th:text="${ticket.priority}">Priority</td>
+            <td th:text="${ticket.severity}">Severity</td>
+            <td th:text="${ticket.ticketStatus}">Status</td>
+            <td th:text="${ticket.ticketType}">Type</td>
+            <td th:text="${ticket.reporter}">Reporter</td>
+            <td th:text="${ticket.assignee}">Assignee</td>
+            <td th:text="${ticket.createDate}">CreateDate</td>
+            <td th:text="${ticket.updatedDate}">UpdatedDate</td>
+            <td>
+                <a th:href="@{/updateBugTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="content">
+    <h3>Feature Request List</h3>
 
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thread-dark">
+        <tr>
+            <th>No.</th>
+            <th>Summary</th>
+            <th>Priority</th>
+            <th>Severity</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Reporter</th>
+            <th>Assignee</th>
+            <th>CreateDate</th>
+            <th>UpdatedDate</th>
+            <th>Action</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="ticket, iterStat: ${featureTypes}" >
+            <td th:text="${iterStat.count}" th:class="${iterStat.even == true ? 'text-primary' : 'text-success'}">No.</td>
+            <td th:text="${ticket.summary}">Summary</td>
+            <td th:text="${ticket.priority}">Priority</td>
+            <td th:text="${ticket.severity}">Severity</td>
+            <td th:text="${ticket.ticketStatus}">Status</td>
+            <td th:text="${ticket.ticketType}">Type</td>
+            <td th:text="${ticket.reporter}">Reporter</td>
+            <td th:text="${ticket.assignee}">Assignee</td>
+            <td th:text="${ticket.createDate}">CreateDate</td>
+            <td th:text="${ticket.updatedDate}">UpdatedDate</td>
+            <td>
+                <a th:href="@{/updateFeature/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

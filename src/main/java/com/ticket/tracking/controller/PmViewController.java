@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public class FeatureTicketViewController {
+public class PmViewController {
     @Autowired
     private FeatureService featureService;
 

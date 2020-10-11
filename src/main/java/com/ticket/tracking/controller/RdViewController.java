@@ -1,10 +1,12 @@
 package com.ticket.tracking.controller;
 
 import com.ticket.tracking.entity.BugType;
+import com.ticket.tracking.entity.FeatureType;
 import com.ticket.tracking.entity.TestCaseType;
 import com.ticket.tracking.entity.role.LoginUser;
-import com.ticket.tracking.service.QaTypeService;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
+import com.ticket.tracking.service.FeatureService;
+import com.ticket.tracking.service.QaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -14,9 +16,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-public class QaViewController {
+public class RdViewController {
+
+    @Autowired
+    private FeatureService featureService;
 
     @Autowired
     private QaTypeService qaTypeService;
@@ -24,36 +30,23 @@ public class QaViewController {
     @Autowired
     private CustomLoginUserDetailsService customLoginUserDetailsService;
 
-    @GetMapping("/qa_dashboard")
-    public ModelAndView qaTickets() {
-        ModelAndView modelAndView = new ModelAndView("qa_dashboard");
+    @GetMapping("/rd_dashboard")
+    public ModelAndView rdTickets() {
+        ModelAndView modelAndView = new ModelAndView("rd_dashboard");
         List<BugType> bugTypes = qaTypeService.getBugTypeTickets();
-        List<TestCaseType> testCaseTypes = qaTypeService.getTestCaseTypeTickets();
+        List<FeatureType> featureTypes = featureService.getFeatureTickets();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        modelAndView.addObject("testCaseTypes", testCaseTypes);
+        modelAndView.addObject("featureTypes", featureTypes);
         modelAndView.addObject("bugTypes", bugTypes);
         modelAndView.addObject("user", user);
         return modelAndView;
     }
 
-    @GetMapping("/qa_create")
-    public ModelAndView qaDashboard() {
-
-        ModelAndView modelAndView = new ModelAndView("qa_create");
-        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        // return DB name to html
-        modelAndView.addObject("users", users);
-        /*
-        setViewName -> {name}.html, file name
-         */
-        return modelAndView;
-    }
-
-    @PostMapping("/savaQaTypeTicket")
+    @PostMapping("/savaBugTicket")
     public ModelAndView createQaTicket(@ModelAttribute("tickets") BugType bugType) {
 
-        ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
+        ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
         qaTypeService.createBugTicket(bugType, user.getFullName());
@@ -61,25 +54,14 @@ public class QaViewController {
         return modelAndView;
     }
 
-
-    @GetMapping("/updateQaTypeTicket/{id}")
-    public ModelAndView updateQaTicket(@PathVariable("id") String id) {
+    @GetMapping("/updateBugTicket/{id}")
+    public ModelAndView updateBugTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
-        ModelAndView modelAndView = new ModelAndView("update_qa_ticket");
+        ModelAndView modelAndView = new ModelAndView("update_bug_ticket");
         BugType bugType = qaTypeService.getBugTicket(id);
-        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("testCaseType", testCaseType);
         modelAndView.addObject("bugType", bugType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
-
-    @GetMapping("/deleteQaTicket/{id}")
-    public ModelAndView deleteTicketView(@PathVariable("id") String id) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
-        qaTypeService.deleteTicket(id);
-        return modelAndView;
-    }
-
 }
