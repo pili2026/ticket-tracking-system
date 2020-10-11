@@ -3,14 +3,10 @@ package com.ticket.tracking.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ticket.tracking.entity.BugType;
-import com.ticket.tracking.entity.FeatureType;
-import com.ticket.tracking.entity.TestCaseType;
+import com.ticket.tracking.entity.TicketType;
 import com.ticket.tracking.entity.role.LoginUser;
-import com.ticket.tracking.entity.ticket.Ticket;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
-import com.ticket.tracking.service.FeatureService;
-import com.ticket.tracking.service.QaTypeService;
+import com.ticket.tracking.service.TicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,10 +26,8 @@ public class AuthController {
     private CustomLoginUserDetailsService loginUserService;
 
     @Autowired
-    private QaTypeService qaTypeService;
+    private TicketTypeService ticketTypeService;
 
-    @Autowired
-    private FeatureService featureService;
 
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -85,9 +79,9 @@ public class AuthController {
     public ModelAndView dashboard() throws JsonProcessingException {
         ModelAndView modelAndView = new ModelAndView();
         List<LoginUser> users = loginUserService.findUsers();
-        List<BugType> bugTypes = qaTypeService.getBugTypeTickets();
-        List<TestCaseType> testCaseTypes = qaTypeService.getTestCaseTypeTickets();
-        List<FeatureType> featureTypes = featureService.getFeatureTickets();
+        List<TicketType> bugTypes = ticketTypeService.getTicketsByType("Bug");
+        List<TicketType> testCaseTypes = ticketTypeService.getTicketsByType("TestCase");
+        List<TicketType> featureTypes = ticketTypeService.getTicketsByType("Feature");
         modelAndView.addObject("users", users);
         modelAndView.addObject("testCaseTypes", testCaseTypes);
         modelAndView.addObject("bugTypes", bugTypes);
@@ -142,25 +136,22 @@ public class AuthController {
     }
 
     @PostMapping("/save_all_type_ticket")
-    public ModelAndView saveAllTypeTicket(@ModelAttribute("tickets") BugType bugType) {
+    public ModelAndView saveAllTypeTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = loginUserService.findUserByEmail(auth.getName());
-        qaTypeService.createBugTicket(bugType, user.getFullName());
-        modelAndView.addObject("tickets", bugType);
+        ticketTypeService.createTicket(ticketType, user.getFullName(), ticketType.getTicketType());
+        modelAndView.addObject("tickets", ticketType);
         return modelAndView;
     }
 
     @GetMapping("/update_all_type_ticket/{id}")
     public ModelAndView updateAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("update_all_type_ticket");
-        BugType bugType = qaTypeService.getBugTicket(id);
-        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = loginUserService.findRDUsers();
-        FeatureType featureType = featureService.getFeatureTicket(id);
-        modelAndView.addObject("tickets", featureType);
-
+        modelAndView.addObject("tickets", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -168,7 +159,7 @@ public class AuthController {
     @GetMapping("/delete_all_type_ticket/{id}")
     public ModelAndView deleteAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-        featureService.deleteTicket(id);
+        ticketTypeService.deleteTicket(id);
         return modelAndView;
     }
 
@@ -176,7 +167,7 @@ public class AuthController {
     public ModelAndView jsonAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_page");
         List<LoginUser> users = loginUserService.findRDUsers();
-        FeatureType featureType = featureService.getFeatureTicket(id);
+        TicketType featureType = ticketTypeService.getTicketById(id);
         modelAndView.addObject("tickets", featureType);
         modelAndView.addObject("users", users);
         return modelAndView;

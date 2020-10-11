@@ -2,13 +2,10 @@ package com.ticket.tracking.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ticket.tracking.entity.BugType;
-import com.ticket.tracking.entity.FeatureType;
-import com.ticket.tracking.entity.TestCaseType;
+import com.ticket.tracking.entity.TicketType;
 import com.ticket.tracking.entity.role.LoginUser;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
-import com.ticket.tracking.service.FeatureService;
-import com.ticket.tracking.service.QaTypeService;
+import com.ticket.tracking.service.TicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -24,10 +21,7 @@ import java.util.List;
 public class RdViewController {
 
     @Autowired
-    private FeatureService featureService;
-
-    @Autowired
-    private QaTypeService qaTypeService;
+    private TicketTypeService ticketTypeService;
 
     @Autowired
     private CustomLoginUserDetailsService customLoginUserDetailsService;
@@ -35,8 +29,8 @@ public class RdViewController {
     @GetMapping("/rd_dashboard")
     public ModelAndView rdTickets() {
         ModelAndView modelAndView = new ModelAndView("rd_dashboard");
-        List<BugType> bugTypes = qaTypeService.getBugTypeTickets();
-        List<FeatureType> featureTypes = featureService.getFeatureTickets();
+        List<TicketType> bugTypes = ticketTypeService.getTicketsByType("Bug");
+        List<TicketType> featureTypes = ticketTypeService.getTicketsByType("Feature");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
         modelAndView.addObject("featureTypes", featureTypes);
@@ -46,24 +40,24 @@ public class RdViewController {
     }
 
     @PostMapping("/savaBugTicket")
-    public ModelAndView saveBugTicket(@ModelAttribute("tickets") BugType bugType) {
+    public ModelAndView saveBugTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        qaTypeService.updateBugTicket(bugType, user.getFullName());
-        modelAndView.addObject("tickets", bugType);
+        ticketTypeService.updateTicket(ticketType);
+        modelAndView.addObject("tickets", ticketType);
         return modelAndView;
     }
 
     @PostMapping("/savaFeatureTicket")
-    public ModelAndView saveFeatureTicket(@ModelAttribute("tickets") FeatureType featureType) {
+    public ModelAndView saveFeatureTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/rd_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        featureService.updateFeatureTicket(featureType);
-        modelAndView.addObject("tickets", featureType);
+        ticketTypeService.updateTicket(ticketType);
+        modelAndView.addObject("tickets", ticketType);
         return modelAndView;
     }
 
@@ -71,9 +65,9 @@ public class RdViewController {
     public ModelAndView updateBugTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_bug_ticket");
-        BugType bugType = qaTypeService.getBugTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("bugType", bugType);
+        modelAndView.addObject("bugType", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -82,9 +76,9 @@ public class RdViewController {
     public ModelAndView updateTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_feature_ticket");
-        FeatureType featureType = featureService.getFeatureTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("featureType", featureType);
+        modelAndView.addObject("featureType", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -93,13 +87,10 @@ public class RdViewController {
     public ModelAndView toJsonRd(@PathVariable("id") String id, LoginUser user) {
         ModelAndView modelAndView = new ModelAndView("json_rd_page");
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        BugType bugType = qaTypeService.getBugTicket(id);
-        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        FeatureType featureType = featureService.getFeatureTicket(id);
 
-        modelAndView.addObject("featureType", featureType);
-        modelAndView.addObject("bugType", gsonPretty.toJson(bugType));
+        modelAndView.addObject("ticketType", gsonPretty.toJson(ticketType));
         modelAndView.addObject("users", users);
 
         return modelAndView;

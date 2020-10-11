@@ -2,12 +2,10 @@ package com.ticket.tracking.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ticket.tracking.entity.BugType;
-import com.ticket.tracking.entity.FeatureType;
-import com.ticket.tracking.entity.TestCaseType;
+import com.ticket.tracking.entity.TicketType;
 import com.ticket.tracking.entity.role.LoginUser;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
-import com.ticket.tracking.service.FeatureService;
+import com.ticket.tracking.service.TicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -21,8 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 public class PmViewController {
+
     @Autowired
-    private FeatureService featureService;
+    private TicketTypeService ticketTypeService;
 
     @Autowired
     private CustomLoginUserDetailsService customLoginUserDetailsService;
@@ -32,10 +31,10 @@ public class PmViewController {
     public ModelAndView featureTickets() {
         ModelAndView modelAndView = new ModelAndView("pm_dashboard");
         System.out.println("dashboard page");
-        List<FeatureType> featureTypes = featureService.getFeatureTickets();
+        List<TicketType> ticketTypes = ticketTypeService.getTicketsByType("Feature");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        modelAndView.addObject("tickets", featureTypes);
+        modelAndView.addObject("tickets", ticketTypes);
         modelAndView.addObject("user", user);
         return modelAndView;
     }
@@ -56,13 +55,13 @@ public class PmViewController {
 
 
     @PostMapping("/savaTicket")
-    public ModelAndView createFeatureTicket(@ModelAttribute("tickets") FeatureType featureType) {
+    public ModelAndView createFeatureTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        featureService.createFeatureTicket(featureType, user.getFullName());
-        modelAndView.addObject("tickets", featureType);
+        ticketTypeService.createTicket(ticketType, user.getFullName(), "Feature");
+        modelAndView.addObject("tickets", ticketType);
         return modelAndView;
     }
 
@@ -70,28 +69,17 @@ public class PmViewController {
     public ModelAndView updateTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_ticket");
-        FeatureType featureType = featureService.getFeatureTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("featureType", featureType);
+        modelAndView.addObject("featureType", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
-//
-//    @PostMapping("/updateTicket")
-//    public ModelAndView updateFeatureTicket(@ModelAttribute("tickets") FeatureType featureType) {
-//
-//        ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-//        featureService.replaceTicketTypeById(featureType, user.getFullName());
-//        modelAndView.addObject("tickets", featureType);
-//        return modelAndView;
-//    }
 
     @GetMapping("/deleteTicket/{id}")
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/pm_dashboard");
-        featureService.deleteTicket(id);
+        ticketTypeService.deleteTicket(id);
         return modelAndView;
     }
 
@@ -99,9 +87,9 @@ public class PmViewController {
     public ModelAndView toJsonTicket(@PathVariable("id") String id, LoginUser user) {
         ModelAndView modelAndView = new ModelAndView("json_feature_page");
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        FeatureType featureType = featureService.getFeatureTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("featureType", gsonPretty.toJson(featureType));
+        modelAndView.addObject("featureType", gsonPretty.toJson(ticketType));
         modelAndView.addObject("users", users);
 
         return modelAndView;

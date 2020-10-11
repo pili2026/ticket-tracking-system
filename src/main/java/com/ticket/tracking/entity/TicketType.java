@@ -3,7 +3,7 @@ package com.ticket.tracking.entity;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "tickets")
-public class TestCaseType {
+public class TicketType {
 
     private String id;
     private String summary;
@@ -18,7 +18,7 @@ public class TestCaseType {
     private String assignee;
 
 
-    public TestCaseType() {
+    public TicketType() {
 
     }
 

@@ -2,11 +2,10 @@ package com.ticket.tracking.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.ticket.tracking.entity.BugType;
-import com.ticket.tracking.entity.TestCaseType;
+import com.ticket.tracking.entity.TicketType;
 import com.ticket.tracking.entity.role.LoginUser;
-import com.ticket.tracking.service.QaTypeService;
 import com.ticket.tracking.service.CustomLoginUserDetailsService;
+import com.ticket.tracking.service.TicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,7 @@ import java.util.List;
 public class QaViewController {
 
     @Autowired
-    private QaTypeService qaTypeService;
+    private TicketTypeService ticketTypeService;
 
     @Autowired
     private CustomLoginUserDetailsService customLoginUserDetailsService;
@@ -29,8 +28,8 @@ public class QaViewController {
     @GetMapping("/qa_dashboard")
     public ModelAndView qaTickets() {
         ModelAndView modelAndView = new ModelAndView("qa_dashboard");
-        List<BugType> bugTypes = qaTypeService.getBugTypeTickets();
-        List<TestCaseType> testCaseTypes = qaTypeService.getTestCaseTypeTickets();
+        List<TicketType> bugTypes = ticketTypeService.getTicketsByType("Bug");
+        List<TicketType> testCaseTypes = ticketTypeService.getTicketsByType("TestCase");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
         modelAndView.addObject("testCaseTypes", testCaseTypes);
@@ -53,13 +52,13 @@ public class QaViewController {
     }
 
     @PostMapping("/savaQaTypeTicket")
-    public ModelAndView createQaTicket(@ModelAttribute("tickets") BugType bugType) {
+    public ModelAndView createQaTicket(@ModelAttribute("tickets") TicketType ticketType) {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
-        qaTypeService.createBugTicket(bugType, user.getFullName());
-        modelAndView.addObject("tickets", bugType);
+        ticketTypeService.createTicket(ticketType, user.getFullName(), ticketType.getTicketType());
+        modelAndView.addObject("tickets", ticketType);
         return modelAndView;
     }
 
@@ -68,11 +67,9 @@ public class QaViewController {
     public ModelAndView updateQaTicket(@PathVariable("id") String id) {
         System.out.println("updateTicketView");
         ModelAndView modelAndView = new ModelAndView("update_qa_ticket");
-        BugType bugType = qaTypeService.getBugTicket(id);
-        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
-        modelAndView.addObject("testCaseType", testCaseType);
-        modelAndView.addObject("bugType", bugType);
+        modelAndView.addObject("ticketType", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -80,7 +77,7 @@ public class QaViewController {
     @GetMapping("/deleteQaTicket/{id}")
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/qa_dashboard");
-        qaTypeService.deleteTicket(id);
+        ticketTypeService.deleteTicket(id);
         return modelAndView;
     }
 
@@ -88,12 +85,10 @@ public class QaViewController {
     public ModelAndView toJsonTicket(@PathVariable("id") String id, LoginUser user) {
         ModelAndView modelAndView = new ModelAndView("json_ticket_page");
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        BugType bugType = qaTypeService.getBugTicket(id);
-        TestCaseType testCaseType = qaTypeService.getTestCaseTicket(id);
+        TicketType ticketType = ticketTypeService.getTicketById(id);
         List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
 
-        modelAndView.addObject("testCaseType", gsonPretty.toJson(testCaseType));
-        modelAndView.addObject("bugType", gsonPretty.toJson(bugType));
+        modelAndView.addObject("ticket", gsonPretty.toJson(ticketType));
         modelAndView.addObject("users", users);
 
         return modelAndView;

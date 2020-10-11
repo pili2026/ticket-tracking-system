@@ -46,16 +46,16 @@
 </nav>
 <body>
 <div>
-    <p th:text="${featureType}">default message</p>
+    <p th:text="${ticketType}">default message</p>
     <script th:inline="javascript">
-            var json = [[${featureType}]]
+            var json = [[${ticketType}]]
             console.log(json);
     </script>
-    <p th:text="${bugType}">default message</p>
-    <script th:inline="javascript">
-            var json = [[${bugType}]]
-            console.log(json);
-    </script>
+<!--    <p th:text="${bugType}">default message</p>-->
+<!--    <script th:inline="javascript">-->
+<!--            var json = [[${bugType}]]-->
+<!--            console.log(json);-->
+<!--    </script>-->
 </div>
 </body>
 </html>
