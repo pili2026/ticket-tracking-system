@@ -8,9 +8,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class AuthController {
@@ -34,7 +38,7 @@ public class AuthController {
 
     @PostMapping(value = "/add_user")
     public ModelAndView createNewUser(LoginUser user, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         LoginUser userExists = loginUserService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult.rejectValue("email", "error.user",
@@ -45,10 +49,18 @@ public class AuthController {
         } else {
             loginUserService.saveUser(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new LoginUser());
-            modelAndView.setViewName("login");
+            modelAndView.addObject("user", user);
 
         }
+        return modelAndView;
+    }
+
+    @GetMapping("/update_user/{id}")
+    public ModelAndView updateUser(@PathVariable("id") String id, LoginUser user) {
+        ModelAndView modelAndView = new ModelAndView("update_user");
+        LoginUser userExists = loginUserService.findUserById(id);
+        modelAndView.addObject("successMessage", "User has been registered successfully");
+        modelAndView.addObject("user", userExists);
         return modelAndView;
     }
 
@@ -56,10 +68,8 @@ public class AuthController {
     public ModelAndView dashboard() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser user = loginUserService.findUserByEmail(auth.getName());
-        modelAndView.addObject("currentUser", user);
-        modelAndView.addObject("fullName", "Welcome " + user.getFullName());
-        modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
+        List<LoginUser> users = loginUserService.findUsers();
+        modelAndView.addObject("users", users);
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
@@ -69,6 +79,13 @@ public class AuthController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
+    @GetMapping("/deleteUser/{id}")
+    public ModelAndView deleteTicketView(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
+        loginUserService.deleteUser(id);
         return modelAndView;
     }
 }

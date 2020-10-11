@@ -30,6 +30,10 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
+    public LoginUser findUserById(String id) {
+        return userRepository.findUserById(id);
+    }
+
     public List<LoginUser> findUsers() {
         return userRepository.findAll();
     }
@@ -72,5 +76,9 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
 
     private UserDetails buildUserForAuthentication(LoginUser user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
+    }
+
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
     }
 }

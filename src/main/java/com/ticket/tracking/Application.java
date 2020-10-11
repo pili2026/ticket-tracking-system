@@ -35,6 +35,8 @@ public class Application {
                 user.setEmail("admin@gmail.com");
                 user.setPassword(bCryptPasswordEncoder.encode("s123"));
                 user.setEnabled(true);
+                user.setFullName("Admin");
+                user.setUserRole("ADMIN");
                 Role userRole = roleRepository.findByRole("ADMIN");
                 user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
                 userRepository.save(user);

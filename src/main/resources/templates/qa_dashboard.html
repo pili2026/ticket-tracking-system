@@ -128,7 +128,7 @@
             <td th:text="${ticket.updatedDate}">UpdatedDate</td>
             <td>
                 <a th:href="@{/updateQaTypeTicket/{id}(id=${ticket.id})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/deleteQaTicket/{id}(id=${ticket.id})}" class="btn btn-danger">Delete</a>
+                <a th:if="${ticket.ticketStatus} == 'Close'" th:href="@{/deleteQaTicket/{id}(id=${ticket.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

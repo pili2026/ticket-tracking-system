@@ -5,11 +5,15 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface LoginUserRepository extends MongoRepository<LoginUser, String> {
 
     LoginUser findByEmail(String email);
+
+    @Query("{'_id': ?0}")
+    LoginUser findUserById(String id);
 
     @Query("{'userRole': {'$regex': ?0, '$options': 'i'}}")
     List<LoginUser> findUserByUserRole(String userRole);
