@@ -76,7 +76,7 @@
                                     <select name="ticketStatus" class="form-control" th:each="ticket: ${featureType}">
                                         <option th:text="${ticket.ticketStatus}"></option>
                                         <option th:unless="${ticket.ticketStatus == 'Start'}" th:text="Start"></option>
-                                        <option th:unless="${ticket.ticketStatus == 'Resolve'}" th:text="Resolve"></option>
+                                        <option th:unless="${ticket.ticketStatus == 'Resolved'}" th:text="Resolved"></option>
                                     </select>
                                 </div>
                             </div>
@@ -88,7 +88,7 @@
                 </div>
             </form>
             <hr>
-            <a th:href="@{/rd_dashboard}" class="btn btn-primary btn-sm mb-3"> Back to Feature Ticket List</a>
+            <a th:href="@{/rd_dashboard}" class="btn btn-primary btn-sm mb-3"> Back to dashboard</a>
         </article>
     </div>
 </div>

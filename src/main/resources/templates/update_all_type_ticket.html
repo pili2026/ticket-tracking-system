@@ -79,7 +79,7 @@
                                     <select name="ticketStatus" class="form-control" th:each="ticket: ${tickets}">
                                         <option th:text="${ticket.ticketStatus}"></option>
                                         <option th:unless="${ticket.ticketStatus == 'Start'}" th:text="Start"></option>
-                                        <option th:unless="${ticket.ticketStatus == 'Resolve'}" th:text="Resolve"></option>
+                                        <option th:unless="${ticket.ticketStatus == 'Resolved'}" th:text="Resolved"></option>
                                         <option th:unless="${ticket.ticketStatus == 'Close'}" th:text="Close"></option>
                                     </select>
                                 </div>

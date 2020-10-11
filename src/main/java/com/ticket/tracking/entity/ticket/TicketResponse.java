@@ -48,7 +48,7 @@ public class TicketResponse {
     }
 
     public void setTicketStatus(String ticketStatus) {
-        String[] targetTypeArray = {"New", "Start", "Close", "Resolve", "Verify"};
+        String[] targetTypeArray = {"New", "Start", "Close", "Resolved", "Verify"};
         for (String s: targetTypeArray) {
             if (s.equals(ticketStatus)) {
                 this.ticketStatus = ticketStatus;
