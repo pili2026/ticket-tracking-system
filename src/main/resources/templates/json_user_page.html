@@ -46,9 +46,9 @@
 </nav>
 <body>
     <div>
-        <p th:text="${tickets}">default message</p>
+        <p th:text="${json}">default message</p>
         <script th:inline="javascript">
-            var json = [[${tickets}]]
+            var json = [[${json}]]
             console.log(json);
         </script>
     </div>

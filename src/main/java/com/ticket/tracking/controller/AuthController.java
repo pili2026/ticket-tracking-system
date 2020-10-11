@@ -113,7 +113,7 @@ public class AuthController {
 
     @GetMapping("/to_json_user/{id}")
     public ModelAndView toJsonUser(@PathVariable("id") String id, LoginUser user) {
-        ModelAndView modelAndView = new ModelAndView("json_page");
+        ModelAndView modelAndView = new ModelAndView("json_user_page");
         LoginUser userExists = loginUserService.findUserById(id);
         String jsonFormat = jsonTest(userExists);
         modelAndView.addObject("successMessage", "User has been registered successfully");
@@ -169,6 +169,16 @@ public class AuthController {
     public ModelAndView deleteAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         featureService.deleteTicket(id);
+        return modelAndView;
+    }
+
+    @GetMapping("/json_all_type_ticket/{id}")
+    public ModelAndView jsonAllTypeTicket(@PathVariable("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("json_page");
+        List<LoginUser> users = loginUserService.findRDUsers();
+        FeatureType featureType = featureService.getFeatureTicket(id);
+        modelAndView.addObject("tickets", featureType);
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 }
