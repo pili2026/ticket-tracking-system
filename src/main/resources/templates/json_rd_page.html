@@ -45,17 +45,13 @@
     </div>
 </nav>
 <body>
-<div>
-    <p th:text="${ticketType}">default message</p>
-    <script th:inline="javascript">
-            var json = [[${ticketType}]]
-            console.log(json);
-    </script>
-<!--    <p th:text="${bugType}">default message</p>-->
-<!--    <script th:inline="javascript">-->
-<!--            var json = [[${bugType}]]-->
-<!--            console.log(json);-->
-<!--    </script>-->
-</div>
+    <div class="dashboard-item-header col-md-6 col-sm-6 col-xs-12" style=" border: 2px solid #F5F5DC; height: 300px;">
+        <h3>Json data</h3>
+        <p th:text="${ticketType}">default message</p>
+        <script th:inline="javascript">
+                var json = [[${ticketType}]]
+                console.log(json);
+        </script>
+    </div>
 </body>
 </html>

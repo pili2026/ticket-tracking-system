@@ -45,7 +45,8 @@
     </div>
 </nav>
 <body>
-    <div>
+    <div class="dashboard-item-header col-md-6 col-sm-6 col-xs-12" style=" border: 2px solid #F5F5DC; height: 300px;">
+        <h3>Json data</h3>
         <p th:text="${json}">default message</p>
         <script th:inline="javascript">
             var json = [[${json}]]
