@@ -10,9 +10,12 @@ Ticket Tracking System uses Spring for development (**Spring boot** / **Spring M
 
 
 ### Environmental requirements
-* OS: Win10 / Ubuntu 18.04
-* IDE: this project use **IntelliJ IDEA**
-* Database: MongoDB
+* Win10 / Ubuntu 18.04
+* This project use **IntelliJ IDEA**
+* MongoDB(NoSql)
+* JDK 11.0.8
+* Embedded Tomcat 9.0.17
+* Maven 4.0
 
 ### Mockup UI
 * [Mockup Folder](https://github.com/pili2026/ticket-tracking-system/tree/main/system-picture/UI-mockup)
@@ -30,7 +33,23 @@ Ticket Tracking System uses Spring for development (**Spring boot** / **Spring M
 * [QA Flow](https://github.com/pili2026/ticket-tracking-system/tree/main/system-picture/flow-chat/QA)
 * [RD Flow](https://github.com/pili2026/ticket-tracking-system/tree/main/system-picture/flow-chat/RD)
 
+### Data Model
+* [MongoDB](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/data%20model.png)
 
+### Class Diagram
+* Controller
+    * [AuthController](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram/AuthController%20Class%20Diagram.png)
+    * [PM Controller](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram/PmViewController%20Class%20Diagram.png)
+    * [QA Controller](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram/QaViewController%20Class%20Diagram.png)
+    * [RD Controller](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram/PmViewController%20Class%20Diagram.png)
+
+* Config
+    * [Config](https://github.com/pili2026/ticket-tracking-system/tree/main/system-picture/Config-diagram)
+
+
+* API Version
+    * [TicketController](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram(API.ver)/TicketController%20Class%20Diagram.png)
+    * [UserController](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram(API.ver)/UserController%20Class%20Diagram.png)
 
 ### API document
 API document are designed using swagger.
