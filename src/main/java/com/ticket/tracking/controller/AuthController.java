@@ -117,7 +117,7 @@ public class AuthController {
     @GetMapping("/create_all_type_ticket")
     public ModelAndView createAllTypeTicket() {
         ModelAndView modelAndView = new ModelAndView("create_all");
-        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findUsers();
         // return DB name to html
         modelAndView.addObject("users", users);
         /*
@@ -142,7 +142,7 @@ public class AuthController {
     public ModelAndView updateAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("update_all_type_ticket");
         TicketType ticketType = ticketTypeService.getTicketById(id);
-        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findUsers();
         modelAndView.addObject("tickets", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;

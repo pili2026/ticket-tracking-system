@@ -18,7 +18,12 @@ Ticket Tracking System uses Spring for development (**Spring boot** / **Spring M
 * Maven 4.0
 
 ### Mockup UI
-* [Mockup Folder](https://github.com/pili2026/ticket-tracking-system/tree/main/system-picture/UI-mockup)
+* [Login](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/login.PNG)
+* [Add User](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/add_user.PNG)
+* [Edit User](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/edit_user.PNG)
+* [Create Ticket](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/create_ticket.PNG)
+* [Update Ticket](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/update_ticket.PNG)
+* [Dashboard](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/dashboard(sample-admin).PNG)
 
 ### Use Case
 * [Bug Type Tikcet](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/bug%20ticket%20use%20cases.jpg)
