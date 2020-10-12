@@ -52,7 +52,7 @@ Ticket Tracking System uses Spring for development (**Spring boot** / **Spring M
     * [UserController](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/Class-diagram(API.ver)/UserController%20Class%20Diagram.png)
 
 ### System Demo
-* [Demo document](https://docs.google.com/document/d/1hRp4Hn0bz9djrtNaCPSf5iXvp37Njhu3zR3n_2yqMFk/edit?usp=sharing)
+* [Demo & document](https://docs.google.com/document/d/1hRp4Hn0bz9djrtNaCPSf5iXvp37Njhu3zR3n_2yqMFk/edit?usp=sharing)
 
 ### API document
 API document are designed using swagger.
