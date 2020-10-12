@@ -82,7 +82,7 @@ public class QaViewController {
     }
 
     @GetMapping("/to_json_ticket/{id}")
-    public ModelAndView toJsonTicket(@PathVariable("id") String id, LoginUser user) {
+    public ModelAndView toJsonTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_ticket_page");
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
         TicketType ticketType = ticketTypeService.getTicketById(id);

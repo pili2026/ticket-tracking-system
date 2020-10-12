@@ -18,7 +18,6 @@ public class TicketConverter {
         response.setTicketStatus(ticket.getTicketStatus());
         response.setTicketType(ticket.getTicketType());
         response.setCreateDate(ticket.getCreateDate());
-        response.setExpectedDate(ticket.getExpectedDate());
         response.setResolveDate(ticket.getResolveDate());
         response.setAssignee(ticket.getAssignee());
         response.setReporter(ticket.getReporter());
@@ -55,7 +54,6 @@ public class TicketConverter {
         ticket.setTicketStatus(request.getTicketStatus());
         ticket.setTicketType(request.getTicketType());
         ticket.setCreateDate(request.getCreateDate());
-        ticket.setExpectedDate(request.getExpectedDate());
         ticket.setResolveDate(request.getResolveDate());
         ticket.setAssignee(request.getAssignee());
         ticket.setReporter(request.getReporter());

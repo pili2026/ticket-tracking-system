@@ -27,9 +27,6 @@ public class TicketRequest {
     @Min(value = 0, message = "Create date is invalid.")
     private int createDate;
 
-    @Min(value = 0, message = "Expected date is invalid.")
-    private int expectedDate;
-
     @Min(value = 0, message = "Resolve date is invalid.")
     private int resolveDate;
 
@@ -128,14 +125,6 @@ public class TicketRequest {
 
     public void setCreateDate(int createDate) {
         this.createDate = createDate;
-    }
-
-    public int getExpectedDate() {
-        return expectedDate;
-    }
-
-    public void setExpectedDate(int expectedDate) {
-        this.expectedDate = expectedDate;
     }
 
     public int getResolveDate() {

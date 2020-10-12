@@ -82,7 +82,7 @@ public class RdViewController {
     }
 
     @GetMapping("to_json_rd/{id}")
-    public ModelAndView toJsonRd(@PathVariable("id") String id, LoginUser user) {
+    public ModelAndView toJsonRd(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_rd_page");
         Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
         TicketType ticketType = ticketTypeService.getTicketById(id);

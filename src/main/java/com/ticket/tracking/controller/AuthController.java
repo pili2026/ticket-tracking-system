@@ -23,11 +23,10 @@ import java.util.List;
 @Controller
 public class AuthController {
     @Autowired
-    private CustomLoginUserDetailsService loginUserService;
+    private CustomLoginUserDetailsService customLoginUserDetailsService;
 
     @Autowired
     private TicketTypeService ticketTypeService;
-
 
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
@@ -47,7 +46,7 @@ public class AuthController {
     @PostMapping(value = "/add_user")
     public ModelAndView createNewUser(LoginUser user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-        LoginUser userExists = loginUserService.findUserByEmail(user.getEmail());
+        LoginUser userExists = customLoginUserDetailsService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult.rejectValue("email", "error.user",
                             "There is already a user registered with the username provided");
@@ -60,16 +59,16 @@ public class AuthController {
 //            modelAndView.addObject("user", new LoginUser());
 //
 //        }
-        loginUserService.saveUser(user);
+        customLoginUserDetailsService.saveUser(user);
         modelAndView.addObject("successMessage", "User has been registered successfully");
         modelAndView.addObject("user", new LoginUser());
         return modelAndView;
     }
 
     @GetMapping("/update_user/{id}")
-    public ModelAndView updateUser(@PathVariable("id") String id, LoginUser user) {
+    public ModelAndView updateUser(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("update_user");
-        LoginUser userExists = loginUserService.findUserById(id);
+        LoginUser userExists = customLoginUserDetailsService.findUserById(id);
         modelAndView.addObject("successMessage", "User has been registered successfully");
         modelAndView.addObject("user", userExists);
         return modelAndView;
@@ -78,7 +77,7 @@ public class AuthController {
     @GetMapping(value = "/dashboard")
     public ModelAndView dashboard() throws JsonProcessingException {
         ModelAndView modelAndView = new ModelAndView();
-        List<LoginUser> users = loginUserService.findUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findUsers();
         List<TicketType> bugTypes = ticketTypeService.getTicketsByType("Bug");
         List<TicketType> testCaseTypes = ticketTypeService.getTicketsByType("TestCase");
         List<TicketType> featureTypes = ticketTypeService.getTicketsByType("Feature");
@@ -90,7 +89,6 @@ public class AuthController {
         return modelAndView;
     }
 
-
     @GetMapping(value = {"/", "/home"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
@@ -101,31 +99,25 @@ public class AuthController {
     @GetMapping("/deleteUser/{id}")
     public ModelAndView deleteTicketView(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
-        loginUserService.deleteUser(id);
+        customLoginUserDetailsService.deleteUser(id);
         return modelAndView;
     }
 
     @GetMapping("/to_json_user/{id}")
-    public ModelAndView toJsonUser(@PathVariable("id") String id, LoginUser user) {
+    public ModelAndView toJsonUser(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_user_page");
-        LoginUser userExists = loginUserService.findUserById(id);
+        LoginUser userExists = customLoginUserDetailsService.findUserById(id);
         String jsonFormat = jsonTest(userExists);
         modelAndView.addObject("successMessage", "User has been registered successfully");
         modelAndView.addObject("json", jsonFormat);
         return modelAndView;
     }
 
-    private String jsonTest(LoginUser loginUser) {
-        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
-        return gsonPretty.toJson(loginUser);
-
-    }
-
     /* ticket */
     @GetMapping("/create_all_type_ticket")
     public ModelAndView createAllTypeTicket() {
         ModelAndView modelAndView = new ModelAndView("create_all");
-        List<LoginUser> users = loginUserService.findRDUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
         // return DB name to html
         modelAndView.addObject("users", users);
         /*
@@ -140,7 +132,7 @@ public class AuthController {
 
         ModelAndView modelAndView = new ModelAndView("redirect:/dashboard");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser user = loginUserService.findUserByEmail(auth.getName());
+        LoginUser user = customLoginUserDetailsService.findUserByEmail(auth.getName());
         ticketTypeService.createTicket(ticketType, user.getFullName(), ticketType.getTicketType());
         modelAndView.addObject("tickets", ticketType);
         return modelAndView;
@@ -150,7 +142,7 @@ public class AuthController {
     public ModelAndView updateAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("update_all_type_ticket");
         TicketType ticketType = ticketTypeService.getTicketById(id);
-        List<LoginUser> users = loginUserService.findRDUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
         modelAndView.addObject("tickets", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
@@ -166,10 +158,16 @@ public class AuthController {
     @GetMapping("/json_all_type_ticket/{id}")
     public ModelAndView jsonAllTypeTicket(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView("json_page");
-        List<LoginUser> users = loginUserService.findRDUsers();
+        List<LoginUser> users = customLoginUserDetailsService.findRDUsers();
         TicketType ticketType = ticketTypeService.getTicketById(id);
         modelAndView.addObject("tickets", ticketType);
         modelAndView.addObject("users", users);
         return modelAndView;
+    }
+
+    private String jsonTest(LoginUser loginUser) {
+        Gson gsonPretty = new GsonBuilder().setPrettyPrinting().create();
+        return gsonPretty.toJson(loginUser);
+
     }
 }

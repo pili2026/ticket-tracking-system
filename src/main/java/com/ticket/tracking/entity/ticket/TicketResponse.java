@@ -9,7 +9,6 @@ public class TicketResponse {
     private String priority;
     private String severity;
     private long createDate;
-    private long expectedDate;
     private long resolveDate;
     private String reporter;
     private String assignee;
@@ -115,14 +114,6 @@ public class TicketResponse {
 
     public void setCreateDate(long createDate) {
         this.createDate = createDate;
-    }
-
-    public long getExpectedDate() {
-        return expectedDate;
-    }
-
-    public void setExpectedDate(long expectedDate) {
-        this.expectedDate = expectedDate;
     }
 
     public long getResolveDate() {

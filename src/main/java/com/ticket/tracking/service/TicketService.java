@@ -30,16 +30,6 @@ public class TicketService {
     @Autowired
     private TickRepository repository;
 
-    public Ticket getTicket(String id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Can't find ticket."));
-    }
-
-    public TicketResponse getTicketResponse(String id) {
-        Ticket ticket = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Can't find ticket"));
-        return TicketConverter.toTicketResponse(ticket);
-    }
 
     // get all ticket, regardless of category
     public List<TicketResponse> getTicketResponses(TicketQueryParameter param) {
@@ -54,34 +44,6 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
-    public TicketResponse createTicket(TicketRequest request) {
-        Ticket ticket = ticketObj(request);
-//        if (ticket.getTicketType().equals("invalid")) {
-//            throw new InvalidValueException("Invalid ticket type");
-//        }
-//        if (ticket.getPriority().equals("invalid")) {
-//            throw new InvalidValueException("Invalid priority");
-//        }
-//        if (ticket.getSeverity().equals("invalid")) {
-//            throw new InvalidValueException("Invalid severity");
-//        }
-//        if (ticket.getTicketStatus().equals("invalid")) {
-//            throw new InvalidValueException("Invalid ticket status");
-//        }
-        repository.insert(ticket);
-
-        return TicketConverter.toTicketResponse(ticket);
-    }
-
-    // updated ticket
-    public TicketResponse replaceTicket(String id, TicketRequest request) {
-        Ticket oldTicket = getTicket(id);
-        Ticket newTicket = TicketConverter.toTicket(request);
-        newTicket.setId(oldTicket.getId());
-        repository.save(newTicket);
-
-        return TicketConverter.toTicketResponse(newTicket);
-    }
 
     public void deleteTicket(String id) {
         repository.deleteById(id);
@@ -97,15 +59,6 @@ public class TicketService {
         return repository.findByCreateDateToBetweenAndSummaryLikeIgnoreCase(createDateFrom, createDateTo, nameKeyword, sort);
     }
 
-    private Sort configureSort(String orderBy, String sortRule) {
-        Sort sort = Sort.unsorted();
-        if (Objects.nonNull(orderBy) && Objects.nonNull(sortRule)) {
-            Sort.Direction direction = Sort.Direction.fromString(sortRule);
-            sort = new Sort(direction, orderBy);
-        }
-
-        return sort;
-    }
 
     /*  ----with ticket type and id----  */
     // updated ticket with specified type and ID
@@ -164,7 +117,6 @@ public class TicketService {
         ticket.setTicketStatus(request.getTicketStatus());
         ticket.setTicketType(type);
         ticket.setCreateDate(request.getCreateDate());
-        ticket.setExpectedDate(request.getExpectedDate());
         ticket.setResolveDate(request.getResolveDate());
         ticket.setAssignee(request.getAssignee());
         ticket.setReporter(request.getReporter());
@@ -172,25 +124,14 @@ public class TicketService {
         return ticket;
     }
 
-    private Ticket ticketObj(TicketRequest request) {
-        Ticket ticket = new Ticket();
-        ticket.setSummary(request.getSummary());
-        ticket.setDescription(request.getDescription());
-        ticket.setPriority(request.getPriority());
-        ticket.setSeverity(request.getSeverity());
-        ticket.setTicketStatus(request.getTicketStatus());
-        ticket.setTicketType(request.getTicketType());
-        ticket.setCreateDate(request.getCreateDate());
-        ticket.setExpectedDate(request.getExpectedDate());
-        ticket.setResolveDate(request.getResolveDate());
-        ticket.setAssignee(request.getAssignee());
-        ticket.setReporter(request.getReporter());
+    private Sort configureSort(String orderBy, String sortRule) {
+        Sort sort = Sort.unsorted();
+        if (Objects.nonNull(orderBy) && Objects.nonNull(sortRule)) {
+            Sort.Direction direction = Sort.Direction.fromString(sortRule);
+            sort = new Sort(direction, orderBy);
+        }
 
-        return ticket;
+        return sort;
     }
 
-    private long currentEpoch() {
-        Instant instant = Instant.now();
-        return instant.toEpochMilli();
-    }
 }
