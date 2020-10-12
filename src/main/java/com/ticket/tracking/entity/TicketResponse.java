@@ -1,10 +1,6 @@
 package com.ticket.tracking.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "tickets")
-// define ticket object
-public class Ticket {
+public class TicketResponse {
     private String id;
     private String summary;
     private String description;
@@ -18,7 +14,7 @@ public class Ticket {
     private String assignee;
 
 
-    public Ticket() {
+    public TicketResponse() {
 
     }
 
@@ -110,4 +106,5 @@ public class Ticket {
     public void setAssignee(String assignee) {
         this.assignee = assignee;
     }
+
 }

@@ -1,34 +1,40 @@
 package com.ticket.tracking.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
-@Document(collection = "tickets")
-// define ticket object
-public class Ticket {
-    private String id;
+public class TicketRequest {
+
+    @NotEmpty(message = "Summary is undefined.")
     private String summary;
+
+    @NotEmpty(message = "Description is undefined.")
     private String description;
+
+    @NotEmpty(message = "Ticket status is undefined.")
     private String ticketStatus;
+
+    @NotEmpty(message = "Ticket type is undefined.")
     private String ticketType;
+
+    @NotEmpty(message = "Priority is undefined.")
     private String priority;
+
+    @NotEmpty(message = "Severity is undefined.")
     private String severity;
+
     private String createDate;
+
     private String resolveDate;
+
+    @NotEmpty(message = "Reporter is undefined.")
     private String reporter;
+
+    @NotEmpty(message = "Assignee is undefined.")
     private String assignee;
 
+    public TicketRequest() {}
 
-    public Ticket() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getSummary() {
         return summary;
@@ -110,4 +116,6 @@ public class Ticket {
     public void setAssignee(String assignee) {
         this.assignee = assignee;
     }
+
 }
+

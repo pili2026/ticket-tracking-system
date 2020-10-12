@@ -20,15 +20,6 @@ public class MockTicketDAO {
 
     private final List<Ticket> ticketDB = new ArrayList<>();
 
-    @PostConstruct
-    private void initDB() {
-        ticketDB.add(new Ticket("B0001", "Android Development (Java)", 380));
-        ticketDB.add(new Ticket("B0002", "Android Development (Kotlin)", 420));
-        ticketDB.add(new Ticket("B0003", "Data Structure (Java)", 250));
-        ticketDB.add(new Ticket("B0004", "Finance Management", 450));
-        ticketDB.add(new Ticket("B0005", "Human Resource Management", 330));
-    }
-
     public Ticket insert(Ticket ticket) {
         ticketDB.add(ticket);
         return ticket;
