@@ -48,10 +48,9 @@ public class TicketController {
         return ResponseEntity.ok(ticket);
     }
 
-    @PostMapping("/{type}")
-    public ResponseEntity<TicketResponse> createTicketByType(@PathVariable("type") String type,
-                                                             @Valid @RequestBody TicketRequest request) {
-        TicketResponse ticket = ticketService.createTicketByType(type, request);
+    @PostMapping("/create_ticket")
+    public ResponseEntity<TicketResponse> createTicketByType(@Valid @RequestBody TicketRequest request) {
+        TicketResponse ticket = ticketService.createTicketByType(request);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()

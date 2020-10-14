@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -87,34 +85,23 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
-    public TicketResponse createTicketByType(String type, TicketRequest request) {
-        Ticket ticket = ticketObjByType(type, request);
-        if (ticket.getTicketType().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket type");
-        }
-        if (ticket.getPriority().equals("invalid")) {
-            throw new InvalidValueException("Invalid priority");
-        }
-        if (ticket.getSeverity().equals("invalid")) {
-            throw new InvalidValueException("Invalid severity");
-        }
-        if (ticket.getTicketStatus().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket status");
-        }
+    public TicketResponse createTicketByType(TicketRequest request) {
+        validator(request);
+        Ticket ticket = ticketObjByType(request);
         repository.insert(ticket);
 
         return TicketConverter.toTicketResponse(ticket);
     }
 
     /*  ----with ticket object----  */
-    private Ticket ticketObjByType(String type, TicketRequest request) {
+    private Ticket ticketObjByType(TicketRequest request) {
         Ticket ticket = new Ticket();
         ticket.setSummary(request.getSummary());
         ticket.setDescription(request.getDescription());
         ticket.setPriority(request.getPriority());
         ticket.setSeverity(request.getSeverity());
         ticket.setTicketStatus(request.getTicketStatus());
-        ticket.setTicketType(type);
+        ticket.setTicketType(request.getTicketType());
         ticket.setCreateDate(request.getCreateDate());
         ticket.setResolveDate(request.getResolveDate());
         ticket.setAssignee(request.getAssignee());
@@ -131,5 +118,30 @@ public class TicketService {
         }
 
         return sort;
+    }
+
+    private void validator(TicketRequest request) {
+        String[] ticketTypes = {"Bug", "Feature", "TestCase"};
+        boolean typeValidator = Arrays.asList(ticketTypes).contains(request.getTicketType());
+
+        String[] ticketSeverity = {"Critical", "Major", "Moderate", "Minor", "Cosmetic"};
+        boolean severityValidator = Arrays.asList(ticketSeverity).contains(request.getSeverity());
+
+        String[] ticketPriority = {"High", "Medium", "Low"};
+        boolean priorityValidator = Arrays.asList(ticketPriority).contains(request.getPriority());
+
+        if (!typeValidator) {
+            throw new InvalidValueException("Invalid ticket type");
+        }
+        if (!request.getPriority().equals("New")) {
+            throw new InvalidValueException("Invalid ticket status");
+        }
+        if (!severityValidator) {
+            throw new InvalidValueException("Invalid severity");
+        }
+        if (!priorityValidator) {
+            throw new InvalidValueException("Invalid ticket status");
+        }
+
     }
 }
