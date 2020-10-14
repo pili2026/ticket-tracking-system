@@ -4,6 +4,7 @@ import com.ticket.tracking.entity.Ticket;
 import com.ticket.tracking.entity.TicketRequest;
 import com.ticket.tracking.entity.TicketResponse;
 import com.ticket.tracking.exception.InvalidValueException;
+import com.ticket.tracking.exception.Validator;
 
 public class TicketConverter {
     private TicketConverter() {
@@ -26,34 +27,21 @@ public class TicketConverter {
         return response;
     }
 
-    public static Ticket toTicket(TicketRequest request) {
-        Ticket ticket = ticketObj(request);
-
-        if (ticket.getTicketType().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket type");
-        }
-        if (ticket.getPriority().equals("invalid")) {
-            throw new InvalidValueException("Invalid priority");
-        }
-        if (ticket.getSeverity().equals("invalid")) {
-            throw new InvalidValueException("Invalid severity");
-        }
-        if (ticket.getTicketStatus().equals("invalid")) {
-            throw new InvalidValueException("Invalid ticket status");
-        }
-
-        return ticket;
+    public static Ticket toTicket(String type, TicketRequest request) {
+        Validator validator = new Validator();
+        validator.validator(request);
+        return ticketObj(type, request);
 
     }
 
-    private static Ticket ticketObj(TicketRequest request) {
+    private static Ticket ticketObj(String type, TicketRequest request) {
         Ticket ticket = new Ticket();
         ticket.setSummary(request.getSummary());
         ticket.setDescription(request.getDescription());
         ticket.setPriority(request.getPriority());
         ticket.setSeverity(request.getSeverity());
         ticket.setTicketStatus(request.getTicketStatus());
-        ticket.setTicketType(request.getTicketType());
+        ticket.setTicketType(type);
         ticket.setCreateDate(request.getCreateDate());
         ticket.setResolveDate(request.getResolveDate());
         ticket.setAssignee(request.getAssignee());

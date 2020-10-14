@@ -20,6 +20,9 @@ public interface TickRepository  extends MongoRepository<Ticket, String> {
     @Query("{'ticketType': {'$regex': ?0, '$options': 'i'}, '_id': ?1}")
     Ticket findByTicketTypeByIdLikeIgnoreCase(String ticketType, String id);
 
+    @Query("{_id: ?0}")
+    Ticket findTicketById(String id);
+
     @Query(sort = "{'summary': 1, 'price': -1}")
     List<Ticket> findByIdInOrderBySummaryAscPriorityDesc(List<String> ids);
 
