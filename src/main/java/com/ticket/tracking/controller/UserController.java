@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,7 +25,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping(value = "/add_user")
+    @PostMapping(value = "/add_user")
     public ResponseEntity<User> createUser(User user, BindingResult bindingResult) {
         User userExists = customLoginUserDetailsService.findUserByEmail(user.getEmail());
         if (userExists != null) {
