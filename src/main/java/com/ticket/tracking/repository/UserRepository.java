@@ -1,6 +1,7 @@
 package com.ticket.tracking.repository;
 
 import com.ticket.tracking.entity.User;
+import com.ticket.tracking.entity.UserResponse;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;

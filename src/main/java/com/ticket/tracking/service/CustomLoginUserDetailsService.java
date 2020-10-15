@@ -2,6 +2,8 @@ package com.ticket.tracking.service;
 
 import com.ticket.tracking.entity.Role;
 import com.ticket.tracking.entity.User;
+import com.ticket.tracking.entity.UserResponse;
+import com.ticket.tracking.repository.RoleRepository;
 import com.ticket.tracking.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

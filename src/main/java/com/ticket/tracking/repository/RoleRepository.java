@@ -1,4 +1,4 @@
-package com.ticket.tracking.service;
+package com.ticket.tracking.repository;
 
 import com.ticket.tracking.entity.Role;
 import org.springframework.data.mongodb.repository.MongoRepository;
