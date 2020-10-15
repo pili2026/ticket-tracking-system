@@ -1,6 +1,7 @@
 package com.ticket.tracking.service;
 
 import com.ticket.tracking.entity.TicketType;
+import com.ticket.tracking.exception.Validator;
 import com.ticket.tracking.function.TimeFunc;
 import com.ticket.tracking.repository.TicketTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class TicketTypeService {
 
     public void createTicket(TicketType ticketType, String name, String type) {
         TimeFunc timeFunc = new TimeFunc();
+        Validator validator = new Validator();
+        validator.validator(ticketType);
 
         ticketType.setSummary(ticketType.getSummary());
         ticketType.setDescription(ticketType.getDescription());
