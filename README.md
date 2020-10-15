@@ -26,9 +26,9 @@ Ticket Tracking System uses Spring for development (**Spring boot** / **Spring M
 * [Dashboard](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/UI-mockup/dashboard(sample-admin).PNG)
 
 ### Use Case
-* [Bug Type Tikcet](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/bug%20ticket%20use%20cases.jpg)
+* [Bug Type Ticket](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/bug%20ticket%20use%20cases.jpg)
 * [Test Case](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/test%20case%20use%20case.jpg)
-* [Feature Resquest Type](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/feature%20request%20use%20case.jpg)
+* [Feature Request Type](https://github.com/pili2026/ticket-tracking-system/blob/main/system-picture/flow-chat/use%20case/feature%20request%20use%20case.jpg)
 
 
 ### System Flow
