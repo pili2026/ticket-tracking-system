@@ -45,19 +45,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/users").permitAll()
+                .antMatchers("/delete_users").permitAll();
 //                .antMatchers("/login").permitAll()
 //                .antMatchers("/add_user").hasAnyAuthority("ADMIN")
 //                .antMatchers("/pm_dashboard/**").hasAuthority("PM")
 //                .antMatchers("/qa_dashboard/**").hasAuthority("QA")
 //                .antMatchers("/rd_dashboard/**").hasAuthority("RD")
-                .antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin().successHandler(customizeAuthenticationSuccessHandler)
-                .loginPage("/login").failureUrl("/login?error=true")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .and().logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling();
+//                .antMatchers("/dashboard/**").hasAuthority("ADMIN").anyRequest()
+//                .authenticated().and().csrf().disable().formLogin().successHandler(customizeAuthenticationSuccessHandler)
+//                .loginPage("/login").failureUrl("/login?error=true")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .and().logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/").and().exceptionHandling();
     }
 
     @Override

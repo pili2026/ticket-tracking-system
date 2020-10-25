@@ -55,6 +55,13 @@ public class CustomLoginUserDetailsService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public void updateUser(String id, User user) {
+        User oldUser = findUserById(id);
+        user.setId(oldUser.getId());
+        userRepository.save(user);
+
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

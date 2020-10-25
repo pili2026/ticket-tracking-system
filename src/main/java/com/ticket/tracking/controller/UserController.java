@@ -42,4 +42,16 @@ public class UserController {
 
     }
 
+    @PutMapping(value = "/edit_user/{id}")
+    public ResponseEntity<User> editUser(User user, @PathVariable("id") String id) {
+        customLoginUserDetailsService.updateUser(id, user);
+        return ResponseEntity.ok(user);
+    }
+
+    @DeleteMapping(value = "/delete_user/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") String id) {
+        customLoginUserDetailsService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
