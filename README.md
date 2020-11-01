@@ -3,7 +3,7 @@ Ticket Tracking System
 Ticket Tracking System uses Spring for development (**Spring boot** / **Spring MVC**).
 
 [Main branch](https://github.com/pili2026/ticket-tracking-system), the front end is developed with thymeleaf modern.
-[Restful ver branch](https://github.com/pili2026/ticket-tracking-system/tree/restful_ver) is a B/E system designed using Restful API, which can be executed using Postman or curl.
+[Ticket-tracking-system-backend](https://github.com/pili2026/ticket-tracking-system-backend) is a B/E system designed using Restful API, which can be executed using Postman or curl.
 
 ### Authority table
 ![](https://i.imgur.com/GM5qD9J.png)
